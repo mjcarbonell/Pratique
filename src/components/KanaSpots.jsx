@@ -1,4 +1,4 @@
-import { Center, Cylinder, Sphere, Text3D } from "@react-three/drei";
+import { Center, Cylinder, Sphere, Box, Plane, Text3D } from "@react-three/drei";
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { useControls } from "leva";
 import { useGameStore } from "../store";
@@ -43,10 +43,7 @@ export const KanaSpots = () => {
       rotation-y={(index / level[currentStage].length) * Math.PI * 2}
     >
       <group position-x={3.5} position-z={-3.5}>
-        <RigidBody
-          colliders={false}
-          type="fixed"
-          onCollisionEnter={() => {
+        <RigidBody colliders={false} type="fixed" onCollisionEnter={() => {
             kanaTouched(word);
           }}
         >
@@ -55,7 +52,7 @@ export const KanaSpots = () => {
             <meshStandardMaterial color="white" />
           </Cylinder>
         </RigidBody>
-        <Sphere scale={[1.22, 1.22, 1.22]} position={[0, 0.8, 0]}>
+        <Sphere scale={[2.3, 1.22, 2.3]} position={[0, 0.8, 0]}>
           <meshPhysicalMaterial {...config} />
         </Sphere>
         <Center position-y={0.8}>
@@ -64,7 +61,7 @@ export const KanaSpots = () => {
             size={0.82}
             rotation-y={-(index / level[currentStage].length) * Math.PI * 2}
           >
-            {word.word}
+            {word.english}
             <meshStandardMaterial color="#ebbe89" toneMapped={false} />
           </Text3D>
         </Center>

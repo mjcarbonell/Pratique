@@ -47,11 +47,13 @@ export const useGameStore = create(
     mode: "default",
     gameState: gameStates.MENU,
     wrongAnswers: 0,
+
+
     startGame: ({ mode }) => {
       const level = generateGameLevel({ nbStages: 5 });
       const currentKana = level[0].find((word) => word.correct);
       playAudio("start", () => {
-        playAudio(`${currentKana.word}`);
+        playAudio(`frenchWords/${currentKana.word}`);
       });
       set({
         level,
@@ -64,7 +66,7 @@ export const useGameStore = create(
     },
     nextStage: () => {
       set((state) => {
-        if (state.currentStage + 1 === state.level.length) {
+        if (state.currentStage + 1 === state.level.length) { // If it is the last stage 
           playAudio("toutes nos félicitations");
           return {
             currentStage: 0,
@@ -74,12 +76,13 @@ export const useGameStore = create(
             lastWrongKana: null,
           };
         }
+        // If it is not the last stage. We prepare for next word
         const currentStage = state.currentStage + 1;
         const currentKana = state.level[currentStage].find(
           (word) => word.correct
         );
         playAudio(`correct${currentStage % 3}`, () => {
-          playAudio(`${currentKana.word}`);
+          playAudio(`frenchWords/${currentKana.word}`);
         });
         return { currentStage, currentKana, lastWrongKana: null };
       });

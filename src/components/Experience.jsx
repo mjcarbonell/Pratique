@@ -25,12 +25,11 @@ export const Experience = () => {
         castShadow
         color={"#9e69da"}
       />
-
       {/* BACKGROUND */}
 
       <Text
         position={[0, -0.92, 0]}
-        fontSize={1.84}
+        fontSize={1.3}
         rotation-x={-Math.PI / 2}
         font="./fonts/IMFellFrenchCanonSC-Regular.ttf"
       >

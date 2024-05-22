@@ -84,9 +84,8 @@ export const CharacterController = () => {
       0,
       characterWorldPosition.z + 14
     );
-
     if (gameState === gameStates.GAME) {
-      targetCameraPosition.y = 6;
+      targetCameraPosition.y = 9;
     }
     if (gameState !== gameStates.GAME) {
       targetCameraPosition.y = 0;
