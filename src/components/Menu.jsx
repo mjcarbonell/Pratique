@@ -15,7 +15,7 @@ export const Menu = () => {
       >
         <div>
           <h1>Pratique Game</h1>
-          <p>What do you want to practice today? (more modes coming soon)</p>
+          <p>HEY, WELCOME TO PRATIQUE! MORE MODES COMING SOON. :)</p>
         </div>
         <button
           disabled={gameState !== gameStates.MENU}
