@@ -1,4 +1,5 @@
 import { gameStates, useGameStore } from "../store";
+import { useGameStoreRoam } from "../storeRoam"; 
 
 export const Menu = () => {
   const { startGame, gameState, goToMenu } = useGameStore((state) => ({
@@ -6,22 +7,28 @@ export const Menu = () => {
     gameState: state.gameState,
     goToMenu: state.goToMenu,
   }));
+
+  const { startGameRoam, goToMenuRoam } = useGameStoreRoam((state) => ({
+    startGameRoam: state.startGameRoam,
+    goToMenuRoam: state.goToMenuRoam,
+  }));
+
+
   return (
     <>
-      <div
-        className={`menu ${
-          gameState !== gameStates.MENU ? "menu--hidden" : ""
-        }`}
-      >
+      {/* We hide the menu if we are not in menu state */}
+      <div className={`menu ${  gameState !== gameStates.MENU ? "menu--hidden" : ""}`}> 
         <div>
           <h1>Pratique Game</h1>
           <p>HEY, WELCOME TO PRATIQUE! MORE MODES COMING SOON. :)</p>
         </div>
-        <button
-          disabled={gameState !== gameStates.MENU}
-          onClick={() => startGame({ mode: "default" })}
-        >
+        {/* disables the button unless game state is in menu  */}
+        <button disabled={gameState !== gameStates.MENU} onClick={() => startGame({ mode: "default" })}>
           Start Vocab Game
+        </button>
+         {/* disables the button unless game state is in menu  */}
+        <button disabled={gameState !== gameStates.MENU} onClick={() => startGameRoam({ mode: "freeRoam" })}>
+          Start FreeRoam Game
         </button>
         <div>
           <p>

@@ -42,7 +42,7 @@ export const KanaSpots = () => {
       key={`${currentStage}-${word.name || index}`}
       rotation-y={(index / level[currentStage].length) * Math.PI * 2}
     >
-      <group position-x={3.5} position-z={-3.5}>
+      <group position-x={3.5} position-z={-4.5}>
         <RigidBody colliders={false} type="fixed" onCollisionEnter={() => {
             kanaTouched(word);
           }}

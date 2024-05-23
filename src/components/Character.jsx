@@ -16,8 +16,8 @@ export default function Character(props) {
   };
 
   useEffect(() => {
-    console.log("Available actions:", Object.keys(actions));
-    console.log("Current characterState:", characterState);
+    //console.log("Available actions:", Object.keys(actions));
+    //console.log("Current characterState:", characterState);
 
     const currentAction = actions[actionMap[characterState]];
     if (currentAction) {

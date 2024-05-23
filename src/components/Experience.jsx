@@ -53,7 +53,7 @@ export const Experience = () => {
         <Kicker />
         {/* FLOOR */}
         <RigidBody colliders={false} type="fixed" name="void">
-          <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}> 
             <planeGeometry args={[50, 50]} />
             <meshBasicMaterial color="#e3daf7" toneMapped={false} />
           </mesh>
@@ -78,7 +78,6 @@ export const Experience = () => {
         >
           <CylinderCollider args={[1 / 2, 5]} />
         </RigidBody>
-
         {/* CHARACTER */}
         <CharacterController />
 

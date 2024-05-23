@@ -143,9 +143,7 @@ export const CharacterController = () => {
         onIntersectionEnter={({ other }) => {
           if (other.rigidBodyObject.name === "void") {
             resetPosition();
-            playAudio("fall", () => {
-              playAudio("ganbatte");
-            });
+            playAudio("fall");
           }
         }}
       >
