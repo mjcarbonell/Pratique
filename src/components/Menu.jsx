@@ -27,9 +27,11 @@ export const Menu = () => {
           Start Vocab Game
         </button>
          {/* disables the button unless game state is in menu  */}
-        <button disabled={gameState !== gameStates.MENU} onClick={() => startGameRoam({ mode: "freeRoam" })}>
+        
+        {/* <button disabled={gameState !== gameStates.MENU} onClick={() => startGameRoam({ mode: "freeRoam" })}>
           Start FreeRoam Game
-        </button>
+        </button> */}
+        
         <div>
           <p>
             Made with 💙 by{" Maxim Carbonell-Kiamtia "}
