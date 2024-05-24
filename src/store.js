@@ -55,6 +55,7 @@ export const useGameStore = create(
       playAudio("start", () => {
         playAudio(`frenchWords/${currentKana.word}`);
       });
+      console.log(currentKana.word.length);
       set({
         level,
         currentStage: 0,
@@ -77,6 +78,7 @@ export const useGameStore = create(
           };
         }
         // If it is not the last stage. We prepare for next word
+
         const currentStage = state.currentStage + 1;
         const currentKana = state.level[currentStage].find(
           (word) => word.correct
@@ -104,6 +106,7 @@ export const useGameStore = create(
         }));
       }
     },
+    
     // CHARACTER CONTROLLER
     characterState: "Idle",
     setCharacterState: (characterState) =>

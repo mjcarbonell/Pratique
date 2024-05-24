@@ -29,7 +29,7 @@ export const Experience = () => {
 
       <Text
         position={[0, -0.92, 0]}
-        fontSize={1.3}
+        fontSize={currentKana && currentKana.word.length >= 15 ? 0.8 : 1.3}
         rotation-x={-Math.PI / 2}
         font="./fonts/IMFellFrenchCanonSC-Regular.ttf"
       >
