@@ -20,7 +20,7 @@ export const Menu = () => {
       <div className={`menu ${  gameState !== gameStates.MENU ? "menu--hidden" : ""}`}> 
         <div>
           <h1>Pratique Game</h1>
-          <p>HEY, WELCOME TO PRATIQUE! MORE MODES COMING SOON. :) New Character</p>
+          <p>HEY, WELCOME TO PRATIQUE! MORE MODES COMING SOON. :)</p>
         </div>
         {/* disables the button unless game state is in menu  */}
         <button disabled={gameState !== gameStates.MENU} onClick={() => startGame({ mode: "default" })}>
