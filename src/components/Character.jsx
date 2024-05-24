@@ -34,11 +34,9 @@ export default function Character(props) {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="character" scale={0.64}>
-          <primitive object={nodes.LeftFootCtrl} />
-          <primitive object={nodes.RightFootCtrl} />
-          <primitive object={nodes.HipsCtrl} />
-          <skinnedMesh name="characterMedium" geometry={nodes.characterMedium.geometry} material={materials['skin.001']} skeleton={nodes.characterMedium.skeleton} />
+        <group name="newCharacter" position={[-0.004, 0, 0]} rotation={[Math.PI / 2, 0, 0]} scale={0.03}>
+          <primitive object={nodes.mixamorigHips} />
+          <skinnedMesh name="Mesh_0002" geometry={nodes.Mesh_0002.geometry} material={materials['Material_0.003']} skeleton={nodes.Mesh_0002.skeleton} />
         </group>
       </group>
     </group>
