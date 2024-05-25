@@ -3,13 +3,15 @@ import {
   Loader,
   useFont,
   useProgress,
+  Text,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva } from "leva";
-import { Suspense, useMemo } from "react";
+import { Suspense, useMemo, useEffect  } from "react";
 import { Experience } from "./components/Experience";
 import { Menu } from "./components/Menu";
+import { gameStates, useGameStore } from "./store";
 
 export const Controls = {
   forward: "forward",
@@ -21,6 +23,15 @@ export const Controls = {
 
 function App() {
   useFont.preload("./fonts/FrenchCanon.json");
+  const { startGame, gameState, goToMenu } = useGameStore((state) => ({
+    startGame: state.startGame,
+    gameState: state.gameState,
+    goToMenu: state.goToMenu,
+  }));
+  useEffect(() => {
+    console.log("Current game state:", gameState);
+  }, [gameState]);
+
   const map = useMemo(
     () => [
       { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
@@ -40,8 +51,19 @@ function App() {
         <color attach="background" args={["#e3daf7"]} />
         <Suspense>
           <Physics>
-            <Experience />
-          </Physics>
+              {(gameState === "GAME" || gameState === "MENU") && <Experience />}
+              {gameState === "FREEROAM" && (
+                <Text
+                  position={[0, 5, 0]}
+                  fontSize={2}
+                  color="black"
+                  anchorX="center"
+                  anchorY="middle"
+                >
+                  Free Roam
+                </Text>
+              )}
+           </Physics>
         </Suspense>
       </Canvas>
       <Loader />
