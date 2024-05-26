@@ -10,8 +10,9 @@ export function Roam(props) {
   const { nodes, materials } = useGLTF('./models/roam/model.gltf')
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.bakery.geometry} material={materials.base_material} position={[0, 3.437, -9.575]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={15} />
+      <mesh geometry={nodes.bakery.geometry} material={materials.base_material} position={[0, 3.29, -17.504]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={15} />
       <mesh geometry={nodes.footing_02.geometry} material={materials['Material.037']} position={[0.068, 0.165, -0.085]} scale={4.923} />
+      <mesh geometry={nodes.mesh.geometry} material={materials['base_material.001']} position={[0.079, 2.072, -10.074]} rotation={[Math.PI / 2, 0, 0]} scale={20} />
     </group>
   )
 }
