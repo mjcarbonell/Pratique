@@ -42,20 +42,7 @@ export const Menu = () => {
           </p>
         </div>
       </div>
-      {/* BACKGROUND MENU_BG */}
-      <div
-        className={`scores ${
-          gameState !== gameStates.GAME_OVER ? "scores--hidden" : ""
-        }`}
-      >
-        <h1>félicitations, tu apprends</h1>
-        <button
-          onClick={goToMenu}
-          disabled={gameState !== gameStates.GAME_OVER}
-        >
-          Play again
-        </button>
-      </div>
+      
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { ContactShadows, Environment, Text } from "@react-three/drei";
+import { ContactShadows, Environment, Text, Html } from "@react-three/drei";
 import {
   CuboidCollider,
   CylinderCollider,
@@ -10,9 +10,10 @@ import { KanaSpots } from "./KanaSpots";
 import { Kicker } from "./Kicker";
 import { Stage } from "./Stage";
 export const Experience = () => {
-  const { currentKana, lastWrongKana } = useGameStore((state) => ({
+  const { currentKana, lastWrongKana, goToMenu } = useGameStore((state) => ({
     currentKana: state.currentKana,
     lastWrongKana: state.lastWrongKana,
+    goToMenu: state.goToMenu,
   }));
 
   return (
@@ -84,6 +85,16 @@ export const Experience = () => {
         {/* KANA */}
         <KanaSpots />
       </group>
+      {/* BACK TO MENU BUTTON */}
+      {/* <group position-x={0} position-y={4} >
+        <Html>
+            <div>
+              <button onClick={goToMenu} >
+                Back to Menu
+              </button>
+            </div>
+          </Html>
+      </group> */}
     </>
   );
 };

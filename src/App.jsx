@@ -1,9 +1,4 @@
-import {
-  KeyboardControls,
-  Loader,
-  useFont,
-  useProgress,
-  Text,
+import { KeyboardControls, Loader, useFont, useProgress, Text, Html,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
@@ -51,6 +46,20 @@ function App() {
         <color attach="background" args={["#e3daf7"]} />
         <Suspense>
           <Physics>
+              {(gameState === "GAME" || gameState === "FREEROAM") && (
+                <group position position-x={-5} position-y={4}>
+                  <Html>
+                    <div>
+                      <button onClick={goToMenu} >
+                        Back to Menu
+                      </button>
+                    </div>
+                  </Html>
+                </group>
+              )} 
+              
+              
+            
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && (
                 <Text
