@@ -5,6 +5,7 @@ import { Physics } from "@react-three/rapier";
 import { Leva } from "leva";
 import { Suspense, useMemo, useEffect  } from "react";
 import { Experience } from "./components/Experience";
+import { ExperienceFreeRoam } from "./components/ExperienceFreeRoam";
 import { Menu } from "./components/Menu";
 import { gameStates, useGameStore } from "./store";
 
@@ -57,20 +58,18 @@ function App() {
                   </Html>
                 </group>
               )} 
-              
-              
-            
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && (
-                <Text
-                  position={[0, 5, 0]}
-                  fontSize={2}
-                  color="black"
-                  anchorX="center"
-                  anchorY="middle"
-                >
-                  Free Roam
-                </Text>
+                // <Text
+                //   position={[0, 5, 0]}
+                //   fontSize={2}
+                //   color="black"
+                //   anchorX="center"
+                //   anchorY="middle"
+                // >
+                //   Free Roam
+                // </Text>
+                <ExperienceFreeRoam />
               )}
            </Physics>
         </Suspense>

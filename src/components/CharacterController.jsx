@@ -78,16 +78,15 @@ export const CharacterController = () => {
     const characterWorldPosition = character.current.getWorldPosition(
       new THREE.Vector3()
     );
-
     const targetCameraPosition = new THREE.Vector3(
       characterWorldPosition.x,
       0,
       characterWorldPosition.z + 14
     );
-    if (gameState === gameStates.GAME) {
+    if (gameState === gameStates.GAME || gameState === gameStates.FREEROAM) {
       targetCameraPosition.y = 9;
     }
-    if (gameState !== gameStates.GAME) {
+    if (gameState !== gameStates.GAME && gameState !== gameStates.FREEROAM) {
       targetCameraPosition.y = 0;
     }
 
