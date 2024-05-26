@@ -5,25 +5,22 @@ Command: npx gltfjsx@6.2.16 ./public/models/roam/model.gltf --output ./src/compo
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { Physics, useBox } from '@react-three/cannon'
-
+import {
+  CuboidCollider,
+  CylinderCollider,
+  RigidBody,
+} from "@react-three/rapier";
 export function Roam(props) {
   const { nodes, materials } = useGLTF('./models/roam/model.gltf')
-
-  const [ref] = useBox(() => ({
-    mass: 0, // Static object (immovable)
-    position: [0.079, 2.072, -10.074], // Same as the position of the mesh
-    args: [20, 1, 20] // Adjust the size to match the mesh geometry
-  }))
-  
   return (
-    <Physics>
-      <group {...props} dispose={null}>
-        <mesh geometry={nodes.bakery.geometry} material={materials.base_material} position={[0, 3.29, -17.504]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={15} />
-        <mesh geometry={nodes.footing_02.geometry} material={materials['Material.037']} position={[0.068, 0.165, -0.085]} scale={4.923} />
-        <mesh ref={ref} geometry={nodes.mesh.geometry} material={materials['base_material.001']} position={[0.079, 2.072, -10.074]} rotation={[Math.PI / 2, 0, 0]} scale={20} />
-      </group>
-    </Physics>
+    <group {...props} dispose={null}>
+      <mesh geometry={nodes.bakery.geometry} material={materials.base_material} position={[0, 3.29, -17.504]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={15} />
+      <mesh geometry={nodes.footing_02.geometry} material={materials['Material.037']} position={[0.068, 0.165, -0.085]} scale={4.923} />
+      <RigidBody colliders={false} type="fixed" position={[0.079, 0.65, -10.074]} friction={2}>
+        <mesh geometry={nodes.mesh.geometry} material={materials['base_material.001']} position={[0, 1.2, 0]} rotation={[Math.PI / 2, 0, 0]} scale={20} />
+        <CuboidCollider args={[3, 1/4, 5]} />
+      </RigidBody>
+    </group>
   )
 }
 

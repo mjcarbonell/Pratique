@@ -52,7 +52,7 @@ export const ExperienceFreeRoam = () => {
           position-y={-0.5}
           friction={2}
         >
-          <CylinderCollider args={[1 / 2, 5]} />
+          <CylinderCollider args={[1/2 , 5]}/>
         </RigidBody>
         {/* CHARACTER */}
         <CharacterController />

@@ -46,7 +46,7 @@ function App() {
       <Canvas shadows camera={{ position: [0, 20, 14], fov: 42 }}>
         <color attach="background" args={["#e3daf7"]} />
         <Suspense>
-          <Physics>
+          <Physics debug>
               {(gameState === "GAME" || gameState === "FREEROAM") && (
                 <group position position-x={-5} position-y={4}>
                   <Html>
@@ -60,15 +60,6 @@ function App() {
               )} 
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && (
-                // <Text
-                //   position={[0, 5, 0]}
-                //   fontSize={2}
-                //   color="black"
-                //   anchorX="center"
-                //   anchorY="middle"
-                // >
-                //   Free Roam
-                // </Text>
                 <ExperienceFreeRoam />
               )}
            </Physics>
