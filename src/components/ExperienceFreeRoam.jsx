@@ -6,6 +6,7 @@ import {
 } from "@react-three/rapier";
 import { useGameStore } from "../store";
 import { CharacterController } from "./CharacterController";
+import Baker from "./Baker";
 import { KanaSpots } from "./KanaSpots";
 import { Kicker } from "./Kicker";
 import { Roam } from "./Roam"
@@ -56,6 +57,8 @@ export const ExperienceFreeRoam = () => {
         </RigidBody>
         {/* CHARACTER */}
         <CharacterController />
+        {/* BAKER */}
+        <Baker />
         {/* KANA */}
       </group>
     </>

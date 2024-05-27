@@ -81,7 +81,9 @@ export const Experience = () => {
           <CylinderCollider args={[1 / 2, 5]} />
         </RigidBody>
         {/* CHARACTER */}
+        
         <CharacterController />
+        {/* <Baker /> */}
         {/* KANA */}
         <KanaSpots />
       </group>
