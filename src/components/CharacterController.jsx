@@ -135,6 +135,7 @@ export const CharacterController = () => {
         ref={rigidbody}
         colliders={false}
         scale={[0.5, 0.5, 0.5]}
+        name={"mainCharacter"}
         enabledRotations={[false, false, false]}
         onCollisionEnter={() => {
           isOnFloor.current = true;
@@ -142,6 +143,9 @@ export const CharacterController = () => {
         onIntersectionEnter={({ other }) => {
           if (other.rigidBodyObject.name === "void") {
             resetPosition();
+            playAudio("fall");
+          }
+          if (other.rigidBodyObject.name === "baker") {
             playAudio("fall");
           }
         }}

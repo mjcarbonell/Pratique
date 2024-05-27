@@ -4,7 +4,7 @@ import {
   CapsuleCollider,
   RigidBody,
 } from "@react-three/rapier";
-import { useGameStore } from "/src/store.js";
+import { useGameStore, playAudio } from "/src/store.js";
 
 export default function Baker(props) {
   const group = useRef();
@@ -34,15 +34,11 @@ export default function Baker(props) {
         onCollisionEnter={() => {
           isOnFloor.current = true;
         }}
+        type="fixed"
         position={[2, 0, -10.074]}
-        onIntersectionEnter={({ other }) => {
-          if (other.rigidBodyObject.name === "void") {
-            resetPosition();
-            playAudio("fall");
-          }
-        }}
+        name={"baker"}
       >
-        <CapsuleCollider args={[0.8, 0.4]} position={[-2, 1, 0]} />
+        <CapsuleCollider args={[0.8, 0.4]} position={[-2, 1, 0]} sensor />
         <group ref={group} {...props} dispose={null}>
           <group name="Scene">
             <group name="Baker" position={[-2, 0, 0]} rotation={[Math.PI / 2, 0, 0]} scale={0.02}>
@@ -51,7 +47,6 @@ export default function Baker(props) {
             </group>
           </group>
         </group>
-
       </RigidBody>
   );
 }
