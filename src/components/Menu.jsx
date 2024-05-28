@@ -8,9 +8,6 @@ export const Menu = () => {
     goToMenu: state.goToMenu,
   }));
 
- 
-
-
   return (
     <>
       {/* We hide the menu if we are not in menu state */}

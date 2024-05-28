@@ -47,7 +47,9 @@ export const useGameStore = create(
     lastWrongKana: null,
     mode: "default",
     gameState: gameStates.MENU,
+    chatState: "FALSE",
     wrongAnswers: 0,
+
 
     // VOCAB GAME 
     startGame: ({ mode }) => {
@@ -113,14 +115,19 @@ export const useGameStore = create(
       set({
         characterState,
       }),
-    
-    startFreeRoam: ({ mode }) => {
+    startFreeRoam: ({ mode }) => { 
+      console.log(mode)
       playAudio("start"); 
       set({
         gameState: gameStates.FREEROAM,
         mode,
       });
     },
- 
+    setChatState: ({ mode }) => { // mode can be "TRUE" or "FALSE"
+      set({
+        chatState: mode,
+      });
+    }
+
   }))
 );

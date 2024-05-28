@@ -7,6 +7,8 @@ import {
 import { useGameStore } from "../store";
 import { CharacterController } from "./CharacterController";
 import Baker from "./Baker";
+import ChatBox from './ChatBox';
+
 import { KanaSpots } from "./KanaSpots";
 import { Kicker } from "./Kicker";
 import { Roam } from "./Roam"
@@ -21,6 +23,13 @@ export const ExperienceFreeRoam = () => {
     <>
       {/* LIGHTS */}
       <Environment preset="sunset" />
+      {/* CHATBOX */}
+      {/* <group position={[8, 0, 0]}>
+        <Html fullscreen>
+          <ChatBox />
+        </Html>
+      </group> */}
+      
       <directionalLight
         position={[5, 5, 5]}
         intensity={0.3}

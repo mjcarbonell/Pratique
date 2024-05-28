@@ -14,11 +14,12 @@ const MAX_VEL = 3;
 const RUN_VEL = 1.5;
 
 export const CharacterController = () => {
-  const { characterState, setCharacterState, gameState } = useGameStore(
+  const { characterState, setCharacterState, gameState, chatState } = useGameStore(
     (state) => ({
       character: state.characterState,
       setCharacterState: state.setCharacterState,
       gameState: state.gameState,
+      chatState: state.chatState,
     })
   );
   const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
@@ -32,6 +33,11 @@ export const CharacterController = () => {
   const isOnFloor = useRef(true);
 
   useFrame((state, delta) => {
+
+    if (chatState === "TRUE") {
+      return; // Disable movement if chatState is TRUE
+    }
+    
     const impulse = { x: 0, y: 0, z: 0 };
     if (jumpPressed && isOnFloor.current) {
       impulse.y += JUMP_FORCE;
