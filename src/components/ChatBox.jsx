@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useGameStore } from "../store";
 import axios from 'axios';
 
-
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
