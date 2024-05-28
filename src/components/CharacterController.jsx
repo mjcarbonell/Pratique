@@ -14,11 +14,12 @@ const MAX_VEL = 3;
 const RUN_VEL = 1.5;
 
 export const CharacterController = () => {
-  const { characterState, setCharacterState, gameState } = useGameStore(
+  const { characterState, setCharacterState, gameState, chatState } = useGameStore(
     (state) => ({
       character: state.characterState,
       setCharacterState: state.setCharacterState,
       gameState: state.gameState,
+      chatState: state.chatState,
     })
   );
   const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
@@ -32,6 +33,11 @@ export const CharacterController = () => {
   const isOnFloor = useRef(true);
 
   useFrame((state, delta) => {
+
+    if (chatState === "TRUE") {
+      return; // Disable movement if chatState is TRUE
+    }
+    
     const impulse = { x: 0, y: 0, z: 0 };
     if (jumpPressed && isOnFloor.current) {
       impulse.y += JUMP_FORCE;
@@ -78,16 +84,15 @@ export const CharacterController = () => {
     const characterWorldPosition = character.current.getWorldPosition(
       new THREE.Vector3()
     );
-
     const targetCameraPosition = new THREE.Vector3(
       characterWorldPosition.x,
       0,
       characterWorldPosition.z + 14
     );
-    if (gameState === gameStates.GAME) {
+    if (gameState === gameStates.GAME || gameState === gameStates.FREEROAM) {
       targetCameraPosition.y = 9;
     }
-    if (gameState !== gameStates.GAME) {
+    if (gameState !== gameStates.GAME && gameState !== gameStates.FREEROAM) {
       targetCameraPosition.y = 0;
     }
 
@@ -136,6 +141,7 @@ export const CharacterController = () => {
         ref={rigidbody}
         colliders={false}
         scale={[0.5, 0.5, 0.5]}
+        name={"mainCharacter"}
         enabledRotations={[false, false, false]}
         onCollisionEnter={() => {
           isOnFloor.current = true;
@@ -143,6 +149,9 @@ export const CharacterController = () => {
         onIntersectionEnter={({ other }) => {
           if (other.rigidBodyObject.name === "void") {
             resetPosition();
+            playAudio("fall");
+          }
+          if (other.rigidBodyObject.name === "baker") {
             playAudio("fall");
           }
         }}

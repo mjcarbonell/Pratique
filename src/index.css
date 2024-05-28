@@ -83,3 +83,39 @@ button:hover {
   cursor: pointer;
   color: #000000b3;
 }
+
+.chatbox-container {
+  width: 300px;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 10px;
+  color: white;
+}
+
+.chatbox-messages {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.chatbox-input-container {
+  display: flex;
+}
+
+.chatbox-input {
+  flex: 1;
+  margin-right: 5px;
+  color: black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.chatbox-button {
+  padding: 5px 10px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+

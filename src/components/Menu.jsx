@@ -1,18 +1,12 @@
 import { gameStates, useGameStore } from "../store";
-import { useGameStoreRoam } from "../storeRoam"; 
 
 export const Menu = () => {
-  const { startGame, gameState, goToMenu } = useGameStore((state) => ({
+  const { startGame, startFreeRoam, gameState, goToMenu } = useGameStore((state) => ({
     startGame: state.startGame,
+    startFreeRoam: state.startFreeRoam,
     gameState: state.gameState,
     goToMenu: state.goToMenu,
   }));
-
-  const { startGameRoam, goToMenuRoam } = useGameStoreRoam((state) => ({
-    startGameRoam: state.startGameRoam,
-    goToMenuRoam: state.goToMenuRoam,
-  }));
-
 
   return (
     <>
@@ -28,9 +22,9 @@ export const Menu = () => {
         </button>
          {/* disables the button unless game state is in menu  */}
         
-        {/* <button disabled={gameState !== gameStates.MENU} onClick={() => startGameRoam({ mode: "freeRoam" })}>
+        <button disabled={gameState !== gameStates.MENU} onClick={() => startFreeRoam({ mode: "freeRoam" })}>
           Start FreeRoam Game
-        </button> */}
+        </button>
         
         <div>
           <p>
@@ -45,19 +39,7 @@ export const Menu = () => {
           </p>
         </div>
       </div>
-      <div
-        className={`scores ${
-          gameState !== gameStates.GAME_OVER ? "scores--hidden" : ""
-        }`}
-      >
-        <h1>félicitations, tu apprends</h1>
-        <button
-          onClick={goToMenu}
-          disabled={gameState !== gameStates.GAME_OVER}
-        >
-          Play again
-        </button>
-      </div>
+      
     </>
   );
 };

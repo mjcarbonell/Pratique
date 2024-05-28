@@ -6,6 +6,7 @@ export const gameStates = {
   MENU: "MENU",
   GAME: "GAME",
   GAME_OVER: "GAME_OVER",
+  FREEROAM: "FREEROAM",
 };
 
 export const playAudio = (path, callback) => {
@@ -46,9 +47,11 @@ export const useGameStore = create(
     lastWrongKana: null,
     mode: "default",
     gameState: gameStates.MENU,
+    chatState: "FALSE",
     wrongAnswers: 0,
 
 
+    // VOCAB GAME 
     startGame: ({ mode }) => {
       const level = generateGameLevel({ nbStages: 5 });
       const currentKana = level[0].find((word) => word.correct);
@@ -106,12 +109,25 @@ export const useGameStore = create(
         }));
       }
     },
-    
     // CHARACTER CONTROLLER
     characterState: "Idle",
     setCharacterState: (characterState) =>
       set({
         characterState,
       }),
+    startFreeRoam: ({ mode }) => { 
+      console.log(mode)
+      playAudio("start"); 
+      set({
+        gameState: gameStates.FREEROAM,
+        mode,
+      });
+    },
+    setChatState: ({ mode }) => { // mode can be "TRUE" or "FALSE"
+      set({
+        chatState: mode,
+      });
+    }
+
   }))
 );
