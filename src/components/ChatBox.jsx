@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useGameStore } from "../store";
-import ollama from 'ollama'
 
 
 const ChatBox = () => {
@@ -12,21 +11,6 @@ const ChatBox = () => {
       setChatState: state.setChatState,
     })
   );
-  
-  const fetchOllamaResponse = async (message) => {
-    try {
-      const response = await ollama.chat({
-        model: 'llama2', 
-        messages: [{ role: 'user', content: message }],
-      });
-      return response.message.content; // Adjust based on the actual response structure
-    } catch (error) {
-      console.error('Error fetching response from Ollama:', error);
-      return 'Sorry, I could not process your request.';
-    }
-  };
-
-
 
   const handleSend = () => {
     if (input.trim() !== '') {
