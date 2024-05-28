@@ -15,6 +15,7 @@ const ChatBox = () => {
   );
 
   const handleSend = async () => {
+    console.log(openAIKey)
     if (input.trim() !== '') {
       setMessages([...messages, { user: 'Player', text: input }]);
       const userInput = input;
