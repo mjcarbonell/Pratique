@@ -20,6 +20,8 @@ RUN chmod +x node_modules/.bin/vite
 # Build the application
 RUN yarn build
 
+# DEBUGGING AND LISTING ALL FILES
+RUN ls -al /app
 # Stage 2: Create the production image
 FROM node:16-alpine as production
 
