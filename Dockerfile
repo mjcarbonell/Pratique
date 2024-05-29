@@ -33,7 +33,7 @@ WORKDIR /app
 # Copy only the necessary files from the build stage
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/server.js ./server.js  # Ensure server.js is copied
+COPY --from=build /app/server.js ./server.js
 COPY --from=build /app/yarn.lock ./yarn.lock
 
 # Install only the production dependencies
