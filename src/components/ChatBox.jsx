@@ -5,7 +5,7 @@ import axios from 'axios';
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const openAIKey = process.env.VITE_OPENAI_KEY;
+  const openAIKey = import.meta.env.VITE_OPENAI_KEY;
 
   const { setChatState } = useGameStore(
     (state) => ({
