@@ -18,7 +18,11 @@ COPY . .
 RUN chmod +x node_modules/.bin/vite
 
 #PRINTING ENV
-RUN node printenv.cjs
+ARG DATABASE_URL
+ARG PORT
+
+# Print the values of the environment variables
+RUN echo "DATABASE_URL: $DATABASE_URL" && echo "PORT: $PORT"
 
 # Build the application
 RUN yarn build
