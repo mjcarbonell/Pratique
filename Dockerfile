@@ -17,13 +17,6 @@ COPY . .
 # Ensure the Vite executable has the right permissions
 RUN chmod +x node_modules/.bin/vite
 
-#PRINTING ENV
-ARG DATABASE_URL
-ARG PORT
-
-# Print the values of the environment variables
-RUN echo "DATABASE_URL: $DATABASE_URL" && echo "PORT: $PORT"
-
 # Build the application
 RUN yarn build
 
@@ -43,7 +36,12 @@ RUN yarn global add serve
 
 RUN yarn install --production
 
+EXPOSE 3000
+
+
 # Set the command to run the application
-CMD ["serve", "-s", "dist"]
+# CMD ["serve", "-s", "dist"]
+CMD ["sh", "-c", "node backend/server.js & serve -s dist"]
+
 
 
