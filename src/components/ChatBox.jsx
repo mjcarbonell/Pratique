@@ -19,7 +19,7 @@ const ChatBox = () => {
       setInput('');
 
       try {
-        const response = await axios.post('/api/openai', { message: userInput });
+        const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { message: userInput });
         const botMessage = response.data;
 
         setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: botMessage }]);
