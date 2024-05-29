@@ -5,7 +5,6 @@ import axios from 'axios';
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const openAIKey = import.meta.env.VITE_OPENAI_KEY;
 
   const { setChatState } = useGameStore(
     (state) => ({
@@ -14,25 +13,15 @@ const ChatBox = () => {
   );
 
   const handleSend = async () => {
-    console.log(import.meta.env);
-
     if (input.trim() !== '') {
       setMessages([...messages, { user: 'Player', text: input }]);
       const userInput = input;
       setInput('');
-      
+
       try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-          model: 'gpt-4', // You can use 'gpt-3.5-turbo' or another model if you prefer
-          messages: [{ role: 'user', content: userInput }],
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${openAIKey}`, // Replace with your actual OpenAI API key
-          }
-        });
-        
-        const botMessage = response.data.choices[0].message.content;
+        const response = await axios.post('/api/openai', { message: userInput });
+        const botMessage = response.data;
+
         setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: botMessage }]);
       } catch (error) {
         console.error('Error fetching response from OpenAI API', error);
@@ -41,9 +30,9 @@ const ChatBox = () => {
     }
   };
 
-  const handleFocus = () => setChatState( {mode: "TRUE"} );
-  const handleBlur = () => setChatState({mode: "FALSE"});
-  
+  const handleFocus = () => setChatState({ mode: "TRUE" });
+  const handleBlur = () => setChatState({ mode: "FALSE" });
+
   return (
     <div className="chatbox-container">
       <div className="chatbox-messages">
