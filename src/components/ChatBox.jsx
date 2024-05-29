@@ -17,11 +17,10 @@ const ChatBox = () => {
       setMessages([...messages, { user: 'Player', text: input }]);
       const userInput = input;
       setInput('');
-
+      // try talking to the backend server
       try {
-        const response = await axios.post('pratiquebackend.railway.internal', { message: userInput });
+        const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { message: userInput });
         const botMessage = response.data;
-
         setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: botMessage }]);
       } catch (error) {
         console.error('Error fetching response from OpenAI API', error);
