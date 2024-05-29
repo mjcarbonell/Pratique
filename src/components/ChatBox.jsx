@@ -14,7 +14,8 @@ const ChatBox = () => {
   );
 
   const handleSend = async () => {
-    console.log(openAIKey)
+    console.log(import.meta.env); // This should print all environment variables prefixed with VITE_
+
     if (input.trim() !== '') {
       setMessages([...messages, { user: 'Player', text: input }]);
       const userInput = input;
