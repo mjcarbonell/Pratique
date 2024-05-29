@@ -41,7 +41,7 @@ EXPOSE 3000
 
 # Set the command to run the application
 # CMD ["serve", "-s", "dist"]
-CMD ["sh", "-c", "node backend/server.js & serve -s dist"]
+CMD ["sh", "-c", "node server.js & serve -s dist"]
 
 
 
