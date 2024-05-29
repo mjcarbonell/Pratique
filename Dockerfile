@@ -4,6 +4,8 @@ FROM node:16-alpine as build
 # Set the working directory
 WORKDIR /app
 
+#CLEARING CACHE
+ARG CACHEBUST=1
 
 # Copy the package.json and yarn.lock files
 COPY package.json yarn.lock ./

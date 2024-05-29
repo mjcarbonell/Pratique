@@ -17,7 +17,7 @@ app.use(express.json());
 app.post('/api/openai', async (req, res) => {
   const { message } = req.body;
   try {
-    console.log("KEYYY, ", process.env.OPENAI_KEY);
+    console.log("KEYYY, ", process.env.OPENAI_KEY); // logging key 
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: 'gpt-4',
       messages: [{ role: 'user', content: message }],
