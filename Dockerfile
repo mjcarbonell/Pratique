@@ -18,7 +18,7 @@ COPY . .
 RUN chmod +x node_modules/.bin/vite
 
 #PRINTING ENV
-RUN printenv
+RUN node printenv.js
 
 # Build the application
 RUN yarn build
