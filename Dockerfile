@@ -17,6 +17,9 @@ COPY . .
 # Ensure the Vite executable has the right permissions
 RUN chmod +x node_modules/.bin/vite
 
+#PRINTING ENV
+RUN printenv
+
 # Build the application
 RUN yarn build
 
@@ -35,10 +38,6 @@ COPY --from=build /app/yarn.lock ./yarn.lock
 RUN yarn global add serve
 
 RUN yarn install --production
-
-ARG VITE_OPENAI_KEY
-ENV VITE_OPENAI_KEY=${VITE_OPENAI_KEY}
-
 
 # Set the command to run the application
 CMD ["serve", "-s", "dist"]
