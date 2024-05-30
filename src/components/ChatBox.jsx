@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGameStore } from "../store";
+import { TextToSpeech } from "./TextToSpeech";
 import axios from 'axios';
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const messagesEndRef = useRef(null);
 
   const { setChatState } = useGameStore(
     (state) => ({
@@ -12,23 +14,48 @@ const ChatBox = () => {
     })
   );
 
-  // Function to send messages to the backend
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const addMessageWithTypingEffect = (message, user) => {
+    return new Promise((resolve) => {
+      let currentText = '';
+      setMessages(prevMessages => [...prevMessages, { user, text: currentText }]);
+      let index = 0;
+      const interval = setInterval(() => {
+        if (index < message.length) {
+          currentText += message.charAt(index);
+          setMessages(prevMessages => prevMessages.map((msg, i) => 
+            i === prevMessages.length - 1 ? { ...msg, text: currentText } : msg
+          ));
+          index++;
+          scrollToBottom();
+        } else {
+          clearInterval(interval);
+          resolve();
+        }
+
+      }, 50);
+      TextToSpeech(message);
+    });
+  };
+
   const sendMessage = async (message, user = 'Player') => {
-    setMessages(prevMessages => [...prevMessages, { user, text: message }]);
+    await addMessageWithTypingEffect(message, user);
     try {
       const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { message });
       const botMessage = response.data;
-      setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: botMessage }]);
+      await addMessageWithTypingEffect(botMessage, 'Baker');
     } catch (error) {
       console.error('Error fetching response from OpenAI API', error);
-      setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: 'Sorry, I am having trouble responding right now.' }]);
+      await addMessageWithTypingEffect('Sorry, I am having trouble responding right now.', 'Baker');
     }
   };
 
-  // Send initial greeting message from the baker when the component mounts
   useEffect(() => {
     const initialMessage = "Bonjour! Je suis votre boulanger français. Comment puis-je vous aider aujourd'hui?";
-    setMessages(prevMessages => [...prevMessages, { user:'Baker', text: initialMessage }]);
+    addMessageWithTypingEffect(initialMessage, 'Baker');
   }, []);
 
   const handleSend = () => {
@@ -44,12 +71,13 @@ const ChatBox = () => {
 
   return (
     <div className="chatbox-container">
-      <div className="chatbox-messages">
+      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto' }}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.user === 'Player' ? 'right' : 'left' }}>
             <strong>{msg.user}:</strong> {msg.text}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className="chatbox-input-container">
         <input
