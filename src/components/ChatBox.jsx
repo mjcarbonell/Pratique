@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGameStore } from "../store";
 import axios from 'axios';
 
@@ -12,20 +12,30 @@ const ChatBox = () => {
     })
   );
 
-  const handleSend = async () => {
+  // Function to send messages to the backend
+  const sendMessage = async (message, user = 'Player') => {
+    setMessages(prevMessages => [...prevMessages, { user, text: message }]);
+    try {
+      const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { message });
+      const botMessage = response.data;
+      setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: botMessage }]);
+    } catch (error) {
+      console.error('Error fetching response from OpenAI API', error);
+      setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: 'Sorry, I am having trouble responding right now.' }]);
+    }
+  };
+
+  // Send initial greeting message from the baker when the component mounts
+  useEffect(() => {
+    const initialMessage = "Bonjour! Je suis votre boulanger français. Comment puis-je vous aider aujourd'hui?";
+    setMessages(prevMessages => [...prevMessages, { user:'Baker', text: initialMessage }]);
+  }, []);
+
+  const handleSend = () => {
     if (input.trim() !== '') {
-      setMessages([...messages, { user: 'Player', text: input }]);
       const userInput = input;
       setInput('');
-      // try talking to the backend server
-      try {
-        const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { message: userInput });
-        const botMessage = response.data;
-        setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: botMessage }]);
-      } catch (error) {
-        console.error('Error fetching response from OpenAI API', error);
-        setMessages(prevMessages => [...prevMessages, { user: 'Baker', text: 'Sorry, I am having trouble responding right now.' }]);
-      }
+      sendMessage(userInput, 'Player');
     }
   };
 
