@@ -26,6 +26,7 @@ a {
   color: white;
 }
 
+/* Menu and scores have the menu_bg.svg with all the french words in the background. */
 .menu,
 .scores {
   position: fixed;
@@ -61,6 +62,7 @@ a {
   }
 }
 
+/* Menu and scores have opacity zero. Hence the name hidden.  */
 .menu--hidden,
 .scores--hidden {
   opacity: 0;

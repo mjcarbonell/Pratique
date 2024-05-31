@@ -46,7 +46,7 @@ function App() {
       <Canvas shadows camera={{ position: [0, 20, 14], fov: 42 }}>
         <color attach="background" args={["#e3daf7"]} />
         <Suspense>
-          <Physics debug>
+          <Physics> 
               {(gameState === "GAME" || gameState === "FREEROAM") && (
                 <group position position-x={-5} position-y={4}>
                   <Html>

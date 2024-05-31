@@ -13,5 +13,3 @@ export const TextToSpeech = async (text, voice) => {
     console.error('Error fetching TTS response:', error);
   }
 };
-
-
