@@ -37,7 +37,7 @@ const ChatBox = () => {
         }
 
       }, 50);
-      TextToSpeech(message);
+      TextToSpeech(message, user);
     });
   };
 
