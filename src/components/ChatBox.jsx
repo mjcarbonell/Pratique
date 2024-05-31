@@ -35,7 +35,6 @@ const ChatBox = () => {
           clearInterval(interval);
           resolve();
         }
-
       }, 50);
       TextToSpeech(message, user);
     });
@@ -45,17 +44,20 @@ const ChatBox = () => {
     const newMessages = [...messages, { user, text: message }];
     await addMessageWithTypingEffect(message, user);
     
-    // Add the user's message to the state
-    setMessages(newMessages);
-
     // Prepare the formatted messages for the API call
-    const formattedMessages = newMessages.map((msg) => ({
-      role: msg.user === 'Player' ? 'user' : 'system',
-      content: msg.text,
-    }));
+    const formattedMessages = [
+      {
+        role: "system",
+        content: "Vous êtes boulanger français. Vous aimez vraiment la série télévisée Game of Thrones"
+      },
+      ...newMessages.map((msg) => ({
+        role: msg.user === 'Player' ? 'user' : 'system',
+        content: msg.text,
+      }))
+    ];
 
     try {
-      const response = await axios.post('http://localhost:3000/api/openai', { messages: formattedMessages });
+      const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
       const botMessage = response.data;
       await addMessageWithTypingEffect(botMessage, 'Baker');
     } catch (error) {
