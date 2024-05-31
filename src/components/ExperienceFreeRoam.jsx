@@ -21,6 +21,7 @@ export const ExperienceFreeRoam = () => {
 
   return (
     <>
+      {/* Should show the cartoon image of baker next to the chat box on the right*/}
       {/* LIGHTS */}
       <Environment preset="sunset" />
       {/* CHATBOX */}
