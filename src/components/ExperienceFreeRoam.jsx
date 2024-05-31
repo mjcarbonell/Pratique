@@ -1,4 +1,5 @@
-import { ContactShadows, Environment, Text, Html } from "@react-three/drei";
+import { useState } from "react";
+import { ContactShadows, Environment, Html } from "@react-three/drei";
 import {
   CuboidCollider,
   CylinderCollider,
@@ -8,10 +9,10 @@ import { useGameStore } from "../store";
 import { CharacterController } from "./CharacterController";
 import Baker from "./Baker";
 import ChatBox from './ChatBox';
-
 import { KanaSpots } from "./KanaSpots";
 import { Kicker } from "./Kicker";
-import { Roam } from "./Roam"
+import { Roam } from "./Roam";
+
 export const ExperienceFreeRoam = () => {
   const { currentKana, lastWrongKana, goToMenu } = useGameStore((state) => ({
     currentKana: state.currentKana,
@@ -19,18 +20,11 @@ export const ExperienceFreeRoam = () => {
     goToMenu: state.goToMenu,
   }));
 
+
   return (
     <>
-      {/* Should show the cartoon image of baker next to the chat box on the right*/}
       {/* LIGHTS */}
       <Environment preset="sunset" />
-      {/* CHATBOX */}
-      {/* <group position={[8, 0, 0]}>
-        <Html fullscreen>
-          <ChatBox />
-        </Html>
-      </group> */}
-      
       <directionalLight
         position={[5, 5, 5]}
         intensity={0.3}
@@ -40,7 +34,7 @@ export const ExperienceFreeRoam = () => {
       <group position-y={-1}>
         {/* FLOOR */}
         <RigidBody colliders={false} type="fixed" name="void">
-          <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}> 
+          <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[50, 50]} />
             <meshBasicMaterial color="#e3daf7" toneMapped={false} />
           </mesh>
@@ -69,7 +63,6 @@ export const ExperienceFreeRoam = () => {
         <CharacterController />
         {/* BAKER */}
         <Baker />
-        {/* KANA */}
       </group>
     </>
   );
