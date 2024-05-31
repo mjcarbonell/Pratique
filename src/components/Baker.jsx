@@ -39,7 +39,7 @@ export default function Baker(props) {
         position={[2, 0, -10.074]}
         name={"baker"}
       >
-        <Html position={[-1, 3, 2]}>
+        <Html position={[-1, 5, 2]}>
           <ChatBox />
         </Html>
         <CapsuleCollider args={[0.8, 0.4]} position={[-2, 1, 0]} sensor />
