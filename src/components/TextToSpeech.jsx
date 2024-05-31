@@ -1,29 +1,15 @@
-export const TextToSpeech = (text) => {
-  const utterance = new SpeechSynthesisUtterance(text);
+import React from 'react';
+import axios from 'axios';
 
-  const setVoiceAndSpeak = () => {
-    const voices = window.speechSynthesis.getVoices();
-    console.log("Available Voices:", voices.map((voice, index) => ({
-      index,
-      name: voice.name,
-      lang: voice.lang,
-    })));
+export const TextToSpeech = async (text) => {
+  try {
+    const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/tts', { text });
+    const base64Audio = response.data.audioContent;
 
-    // Select a French voice if available
-    // const frenchVoice = voices.find(voice => voice.lang.startsWith('fr'));
-    const frenchVoice = voices[12];
-    if (frenchVoice) {
-      utterance.voice = frenchVoice;
-    } else if (voices.length > 0) {
-      utterance.voice = voices[0];
-    }
+    const audio = new Audio(`data:audio/mp3;base64,${base64Audio}`);
+    audio.play();
 
-    window.speechSynthesis.speak(utterance);
-  };
-
-  if (window.speechSynthesis.getVoices().length === 0) {
-    window.speechSynthesis.onvoiceschanged = setVoiceAndSpeak;
-  } else {
-    setVoiceAndSpeak();
+  } catch (error) {
+    console.error('Error fetching TTS response:', error);
   }
 };
