@@ -14,12 +14,9 @@ import { Kicker } from "./Kicker";
 import { Roam } from "./Roam";
 
 export const ExperienceFreeRoam = () => {
-  const { currentKana, lastWrongKana, goToMenu } = useGameStore((state) => ({
-    currentKana: state.currentKana,
-    lastWrongKana: state.lastWrongKana,
+  const { goToMenu } = useGameStore((state) => ({
     goToMenu: state.goToMenu,
   }));
-
 
   return (
     <>
