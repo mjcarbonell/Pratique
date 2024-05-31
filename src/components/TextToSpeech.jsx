@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-export const TextToSpeech = async (text) => {
+export const TextToSpeech = async (text, voice) => {
   try {
-    const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/tts', { text });
+    const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/tts', { text, voice });
     const base64Audio = response.data.audioContent;
 
     const audio = new Audio(`data:audio/mp3;base64,${base64Audio}`);
@@ -13,3 +13,5 @@ export const TextToSpeech = async (text) => {
     console.error('Error fetching TTS response:', error);
   }
 };
+
+
