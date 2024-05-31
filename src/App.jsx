@@ -1,9 +1,8 @@
-import { KeyboardControls, Loader, useFont, useProgress, Text, Html,
-} from "@react-three/drei";
+import { KeyboardControls, Loader, useFont, useProgress, Text, Html } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva } from "leva";
-import { Suspense, useMemo, useEffect  } from "react";
+import { Suspense, useMemo, useEffect } from "react";
 import { Experience } from "./components/Experience";
 import { ExperienceFreeRoam } from "./components/ExperienceFreeRoam";
 import { Menu } from "./components/Menu";
@@ -24,6 +23,7 @@ function App() {
     gameState: state.gameState,
     goToMenu: state.goToMenu,
   }));
+
   useEffect(() => {
     console.log("Current game state:", gameState);
   }, [gameState]);
@@ -41,34 +41,30 @@ function App() {
 
   const { progress } = useProgress();
   return (
-    <KeyboardControls map={map}>
-      <Leva hidden />
-      <Canvas shadows camera={{ position: [0, 20, 14], fov: 42 }}>
-        <color attach="background" args={["#e3daf7"]} />
-        <Suspense>
-          <Physics> 
-              {(gameState === "GAME" || gameState === "FREEROAM") && (
-                <group position position-x={-5} position-y={4}>
-                  <Html>
-                    <div>
-                      <button onClick={goToMenu} >
-                        Back to Menu Test
-                      </button>
-                    </div>
-                  </Html>
-                </group>
-              )} 
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      <KeyboardControls map={map}>
+        <Leva hidden />
+        <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [0, 20, 14], fov: 42 }}>
+          <color attach="background" args={["#e3daf7"]} />
+          <Suspense>
+            <Physics>
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
-              {gameState === "FREEROAM" && (
-                <ExperienceFreeRoam />
-              )}
-           </Physics>
-        </Suspense>
-      </Canvas>
-      <Loader />
-      {progress === 100 && <Menu />}
-      <Menu />
-    </KeyboardControls>
+              {gameState === "FREEROAM" && <ExperienceFreeRoam />}
+            </Physics>
+          </Suspense>
+        </Canvas>
+        <Loader />
+        {progress === 100 && <Menu />}
+        <Menu />
+      </KeyboardControls>
+
+      {/* Fixed button outside of Canvas */}
+      {(gameState === "GAME" || gameState === "FREEROAM") && (
+        <div style={{ position: "fixed", top: "10px", left: "10px", zIndex: 1000 }}>
+          <button onClick={goToMenu}>Back to Menu Test</button>
+        </div>
+      )}
+    </div>
   );
 }
 
