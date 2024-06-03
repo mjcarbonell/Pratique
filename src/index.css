@@ -121,3 +121,12 @@ button:hover {
   cursor: pointer;
 }
 
+.attempts-counter {
+  margin-top: 10px;
+  text-align: center;
+  background: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.2em; /* Increase this value to make the text even larger */
+}
