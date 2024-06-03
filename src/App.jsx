@@ -7,15 +7,11 @@ import { Experience } from "./components/Experience";
 import { ExperienceFreeRoam } from "./components/ExperienceFreeRoam";
 import { Menu } from "./components/Menu";
 import { gameStates, useGameStore } from "./store";
+import { FreeRoamInstructions } from "./components/FreeRoamInstructions"; // Import the new component
+import { Badges } from "./components/Badges"; // Import the new component
 
 
-export const Controls = {
-  forward: "forward",
-  back: "back",
-  left: "left",
-  right: "right",
-  jump: "jump",
-};
+export const Controls = {forward: "forward", back: "back", left: "left", right: "right", jump: "jump", };
 
 function App() {
   const [hasStarted, setHasStarted] = useState(false);
@@ -71,14 +67,9 @@ function App() {
       )}
       {/* Instructions for freeRoam level. If gameState is FREEROAM and hasStarted is false we show it.  */}
       {(gameState === "FREEROAM" && hasStarted === false) && (
-        <div style={{position: "fixed",top: "0",left: "0",width: "100vw",height: "100vh",background: "rgba(0, 0, 0, 0.8)",display: "flex",flexDirection: "column",justifyContent: "center",alignItems: "center",color: "white",textAlign: "center",zIndex: 10}}>
-        <h2>Welcome to the Game!</h2>
-        <p>Instructions: To progress in the game, you need to hold conversations in French with characters like the baker. Make sure your responses are more than just 'yes' or 'no' to move on to the next level and earn rewards. You will have 10 sentences to speak!</p>
-        <button onClick={handleStart}style={{padding: "10px 20px", fontSize: "16px", cursor: "pointer",border: "none",borderRadius: "5px",background: "#4CAF50",color: "white",marginTop: "20px"}}>
-          Start
-        </button>
-      </div>
+        <FreeRoamInstructions handleStart={handleStart} /> // Use the new component
       )}
+      <Badges />
     </div>
   );
 }

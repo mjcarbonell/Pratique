@@ -9,6 +9,7 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [gradeResponse, setGradeResponse] = useState(''); 
+  const [gradeReason, setGradeReason] = useState(''); 
   const messagesEndRef = useRef(null);
 
   const { setChatState } = useGameStore(
@@ -52,13 +53,6 @@ const ChatBox = () => {
       {
         role: "system",
         content: "Vous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglaisVous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglais. S'ils parlent anglais, vous devez agir comme si vous ne compreniez pas."
-        // [
-        //   {"role": "system", "content": "exemple"},
-        //   {"role": "system", "contenu": "..."},
-        //   {"role": "user", "contenu": "..."},
-        //   {"role": "system", "contenu": "..."},
-        //   {"role": "user", "contenu": "..."}
-        // ]`
       },
       ...newMessages.map((msg) => ({
         role: msg.user === 'Player' ? 'user' : 'system',
@@ -66,10 +60,12 @@ const ChatBox = () => {
       }))
     ];
     setAttempts(attempts => attempts += 1); // Increment the attempts counter
-    if (attempts == 2){ // when they  attempts we grade the conversation 
+    if (attempts == 1){ // When "attempt"==2 grader will grade up to the 3rd attempt. This is because   
       const localGradeResponse = await GrammarCheck(newMessages);
-      setGradeResponse(localGradeResponse); ``
-      console.log(localGradeResponse); 
+      const localGradeList = localGradeResponse.split(':::'); // Split the string by ":"
+      setGradeResponse(localGradeList[0]); 
+      setGradeReason(localGradeList[1]); 
+      console.log(localGradeList); 
     }
     try {
       const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
@@ -126,6 +122,9 @@ const ChatBox = () => {
       </div>
       <div className="attempts-counter">
         Score: {gradeResponse}
+      </div>
+      <div className="attempts-counter">
+        Tips for improving: {gradeReason}
       </div>
     </div>
   );
