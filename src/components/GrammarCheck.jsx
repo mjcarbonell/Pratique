@@ -21,12 +21,10 @@ export const GrammarCheck = async (conversation) => { // passing in the entire c
         }))
     ];
     try {
-        console.log("Formatted: ", formattedMessages)
         const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
         const botMessage = response.data;
-        console.log(botMessage)
-        console.log(response)
-        return response.data; 
+        console.log("bot message: ", botMessage)
+        return botMessage; 
     } catch (error) {
         console.error('Error fetching response from OpenAI API', error);
         return; 

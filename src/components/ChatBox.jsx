@@ -8,6 +8,7 @@ const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
+  const [gradeResponse, setGradeResponse] = useState(''); 
   const messagesEndRef = useRef(null);
 
   const { setChatState } = useGameStore(
@@ -50,23 +51,25 @@ const ChatBox = () => {
     const formattedMessages = [
       {
         role: "system",
-        content: `Vous êtes un boulanger français qui ne parle que français. Tout ce qui vous sera dit proviendra de quelqu'un qui essaie d'apprendre le français. S'ils peuvent donner 4 réponses grammaticalement correctes et qui sont plus que de simples réponses « oui ou non », vous pouvez dire « TRUE » sur votre 5ème réponse. S'ils ne remplissent pas les conditions, vous pouvez dire « FALSE » lors de votre 5ème réponse. Vous trouverez ci-dessous un exemple des messages que vous recevrez. Lorsque vous voyez que l'utilisateur a envoyé 4 messages, vous pouvez dire « TRUE » ou « FALSE ».
-        [
-          {"role": "system", "content": "exemple"},
-          {"role": "system", "contenu": "..."},
-          {"role": "user", "contenu": "..."},
-          {"role": "system", "contenu": "..."},
-          {"role": "user", "contenu": "..."}
-        ]`
+        content: "Vous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglaisVous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglais. S'ils parlent anglais, vous devez agir comme si vous ne compreniez pas."
+        // [
+        //   {"role": "system", "content": "exemple"},
+        //   {"role": "system", "contenu": "..."},
+        //   {"role": "user", "contenu": "..."},
+        //   {"role": "system", "contenu": "..."},
+        //   {"role": "user", "contenu": "..."}
+        // ]`
       },
       ...newMessages.map((msg) => ({
         role: msg.user === 'Player' ? 'user' : 'system',
         content: msg.text,
       }))
     ];
-    console.log("formatted chat: ", formattedMessages);
-    if (attempts >= 0){ // at 10 attempts we grade the conversation 
-      const gradeResponse = GrammarCheck(newMessages);
+    setAttempts(attempts => attempts += 1); // Increment the attempts counter
+    if (attempts == 2){ // when they  attempts we grade the conversation 
+      const localGradeResponse = await GrammarCheck(newMessages);
+      setGradeResponse(localGradeResponse); ``
+      console.log(localGradeResponse); 
     }
     try {
       const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
@@ -83,18 +86,10 @@ const ChatBox = () => {
     addMessageWithTypingEffect(initialMessage, 'Baker');
   }, []);
   
-  // useEffect(() => {
-  //   if (attempts == 1){ // at 10 attempts we grade the conversation 
-  //     GrammarCheck(messages);
-  //   }
-  //   return; 
-  // }, [attempts]);
-
   const handleSend = () => {
     if (input.trim() !== '') {
       const userInput = input;
       setInput('');
-      setAttempts(attempts => attempts += 1); // Increment the attempts counter
       sendMessage(userInput, 'Player');
     }
   };
@@ -123,11 +118,14 @@ const ChatBox = () => {
           className="chatbox-input"
         />
         <button onClick={handleSend} className="chatbox-button">
-          Send ({attempts})
+          Send
         </button>
       </div>
       <div className="attempts-counter">
         Attempts: {attempts} / 10
+      </div>
+      <div className="attempts-counter">
+        Score: {gradeResponse}
       </div>
     </div>
   );
