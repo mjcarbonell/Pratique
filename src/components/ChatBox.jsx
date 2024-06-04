@@ -4,12 +4,17 @@ import { TextToSpeech } from "./TextToSpeech";
 import { GrammarCheck } from "./GrammarCheck"
 import axios from 'axios';
 
+let gradeResponse = '';
+let gradeReason = '';
+
+export const getPlayerScores = async () => {
+  return [gradeResponse, gradeReason]; 
+};
+
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
-  const [gradeResponse, setGradeResponse] = useState(''); 
-  const [gradeReason, setGradeReason] = useState(''); 
   const messagesEndRef = useRef(null);
 
   const { setChatState } = useGameStore(
@@ -63,8 +68,8 @@ const ChatBox = () => {
     if (attempts == 1){ // When "attempt"==2 grader will grade up to the 3rd attempt. This is because   
       const localGradeResponse = await GrammarCheck(newMessages);
       const localGradeList = localGradeResponse.split(':::'); // Split the string by ":"
-      setGradeResponse(localGradeList[0]); 
-      setGradeReason(localGradeList[1]); 
+      gradeResponse = localGradeList[0]; 
+      gradeReason = localGradeList[1]; 
       console.log(localGradeList); 
     }
     try {
@@ -95,7 +100,7 @@ const ChatBox = () => {
 
   return (
     <div className="chatbox-container">
-      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto'}}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.user === 'Player' ? 'right' : 'left' }}>
             <strong>{msg.user}:</strong> {msg.text}
@@ -119,12 +124,6 @@ const ChatBox = () => {
       </div>
       <div className="attempts-counter">
         Attempts: {attempts} / 10
-      </div>
-      <div className="attempts-counter">
-        Score: {gradeResponse}
-      </div>
-      <div className="attempts-counter">
-        Tips for improving: {gradeReason}
       </div>
     </div>
   );

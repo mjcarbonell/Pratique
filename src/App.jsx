@@ -9,7 +9,7 @@ import { Menu } from "./components/Menu";
 import { gameStates, useGameStore } from "./store";
 import { FreeRoamInstructions } from "./components/FreeRoamInstructions"; // Import the new component
 import { Badges } from "./components/Badges"; // Import the new component
-
+import ChatBox from "./components/ChatBox";
 
 export const Controls = {forward: "forward", back: "back", left: "left", right: "right", jump: "jump", };
 
@@ -69,6 +69,9 @@ function App() {
       {(gameState === "FREEROAM" && hasStarted === false) && (
         <FreeRoamInstructions handleStart={handleStart} /> // Use the new component
       )}
+      {/* {(gameState === "FREEROAM") && (
+        <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 1000 }} /> 
+      )} */}
       <Badges />
     </div>
   );
