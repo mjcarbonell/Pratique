@@ -1,14 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useGameStore } from "../store";
+import { gameStates, useGameStore } from "../store";
 import { TextToSpeech } from "./TextToSpeech";
 import { GrammarCheck } from "./GrammarCheck"
 import axios from 'axios';
 
+let gradeResponse = '';
+let gradeReason = '';
+
+export const getPlayerScores = async () => {
+  return [gradeResponse, gradeReason]; 
+};
+
 const ChatBox = () => {
+  const { gameState } = useGameStore((state) => ({
+    gameState: state.gameState,
+  }));
+
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
+  const [count, setCount] = useState(0);
   const messagesEndRef = useRef(null);
+  const initialRender = useRef(true);
 
   const { setChatState } = useGameStore(
     (state) => ({
@@ -50,23 +64,20 @@ const ChatBox = () => {
     const formattedMessages = [
       {
         role: "system",
-        content: `Vous êtes un boulanger français qui ne parle que français. Tout ce qui vous sera dit proviendra de quelqu'un qui essaie d'apprendre le français. S'ils peuvent donner 4 réponses grammaticalement correctes et qui sont plus que de simples réponses « oui ou non », vous pouvez dire « TRUE » sur votre 5ème réponse. S'ils ne remplissent pas les conditions, vous pouvez dire « FALSE » lors de votre 5ème réponse. Vous trouverez ci-dessous un exemple des messages que vous recevrez. Lorsque vous voyez que l'utilisateur a envoyé 4 messages, vous pouvez dire « TRUE » ou « FALSE ».
-        [
-          {"role": "system", "content": "exemple"},
-          {"role": "system", "contenu": "..."},
-          {"role": "user", "contenu": "..."},
-          {"role": "system", "contenu": "..."},
-          {"role": "user", "contenu": "..."}
-        ]`
+        content: "Vous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglaisVous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglais. S'ils parlent anglais, vous devez agir comme si vous ne compreniez pas."
       },
       ...newMessages.map((msg) => ({
         role: msg.user === 'Player' ? 'user' : 'system',
         content: msg.text,
       }))
     ];
-    console.log("formatted chat: ", formattedMessages);
-    if (attempts >= 0){ // at 10 attempts we grade the conversation 
-      const gradeResponse = GrammarCheck(newMessages);
+    setAttempts(attempts => attempts += 1); // Increment the attempts counter
+    if (attempts == 1){ // When "attempt"==2 grader will grade up to the 3rd attempt. This is because   
+      const localGradeResponse = await GrammarCheck(newMessages);
+      const localGradeList = localGradeResponse.split(':::'); // Split the string by ":"
+      gradeResponse = localGradeList[0]; 
+      gradeReason = localGradeList[1]; 
+      console.log(localGradeList); 
     }
     try {
       const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
@@ -79,22 +90,17 @@ const ChatBox = () => {
   };
 
   useEffect(() => {
-    const initialMessage = "Bonjour! Comment puis-je vous aider aujourd'hui?";
-    addMessageWithTypingEffect(initialMessage, 'Baker');
+    if (initialRender.current) {
+      initialRender.current = false;
+      const initialMessage = "Bonjour! Comment puis-je vous aider aujourd'hui?";
+      addMessageWithTypingEffect(initialMessage, 'Baker');
+    }
   }, []);
   
-  // useEffect(() => {
-  //   if (attempts == 1){ // at 10 attempts we grade the conversation 
-  //     GrammarCheck(messages);
-  //   }
-  //   return; 
-  // }, [attempts]);
-
   const handleSend = () => {
     if (input.trim() !== '') {
       const userInput = input;
       setInput('');
-      setAttempts(attempts => attempts += 1); // Increment the attempts counter
       sendMessage(userInput, 'Player');
     }
   };
@@ -104,7 +110,7 @@ const ChatBox = () => {
 
   return (
     <div className="chatbox-container">
-      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto'}}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.user === 'Player' ? 'right' : 'left' }}>
             <strong>{msg.user}:</strong> {msg.text}
@@ -123,7 +129,7 @@ const ChatBox = () => {
           className="chatbox-input"
         />
         <button onClick={handleSend} className="chatbox-button">
-          Send ({attempts})
+          Send
         </button>
       </div>
       <div className="attempts-counter">

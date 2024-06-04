@@ -1,4 +1,4 @@
-import { KeyboardControls, Loader, useFont, useProgress, Text, Html } from "@react-three/drei";
+import { KeyboardControls, Loader, useFont, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva } from "leva";
@@ -7,20 +7,16 @@ import { Experience } from "./components/Experience";
 import { ExperienceFreeRoam } from "./components/ExperienceFreeRoam";
 import { Menu } from "./components/Menu";
 import { gameStates, useGameStore } from "./store";
+import { FreeRoamInstructions } from "./components/FreeRoamInstructions";
+import { Badges } from "./components/Badges";
+import ChatBox from "./components/ChatBox";
 
-
-export const Controls = {
-  forward: "forward",
-  back: "back",
-  left: "left",
-  right: "right",
-  jump: "jump",
-};
+export const Controls = { forward: "forward", back: "back", left: "left", right: "right", jump: "jump" };
 
 function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const handleStart = () => {
-    setHasStarted(true)
+    setHasStarted(true);
   };
   useFont.preload("./fonts/FrenchCanon.json");
   const { startGame, gameState, goToMenu } = useGameStore((state) => ({
@@ -29,9 +25,9 @@ function App() {
     goToMenu: state.goToMenu,
   }));
 
-  useEffect(() => { // Gets called whenever gameState changes  
+  useEffect(() => {
     console.log("Current game state:", gameState);
-    setHasStarted(false); 
+    setHasStarted(false);
   }, [gameState]);
 
   const map = useMemo(
@@ -61,24 +57,19 @@ function App() {
         </Canvas>
         <Loader />
         {progress === 100 && <Menu />}
-        <Menu />
       </KeyboardControls>
-      {/* Menu button */}
       {(gameState === "GAME" || gameState === "FREEROAM") && (
         <div style={{ position: "fixed", top: "10px", left: "10px", zIndex: 1000 }}>
-          <button onClick={goToMenu}>Back to Menu Test</button>
+          <button onClick={goToMenu}>Back to Menu</button>
         </div>
       )}
-      {/* Instructions for freeRoam level. If gameState is FREEROAM and hasStarted is false we show it.  */}
       {(gameState === "FREEROAM" && hasStarted === false) && (
-        <div style={{position: "fixed",top: "0",left: "0",width: "100vw",height: "100vh",background: "rgba(0, 0, 0, 0.8)",display: "flex",flexDirection: "column",justifyContent: "center",alignItems: "center",color: "white",textAlign: "center",zIndex: 10}}>
-        <h2>Welcome to the Game!</h2>
-        <p>Instructions: To progress in the game, you need to hold conversations in French with characters like the baker. Make sure your responses are more than just 'yes' or 'no' to move on to the next level and earn rewards. You will have 10 sentences to speak!</p>
-        <button onClick={handleStart}style={{padding: "10px 20px", fontSize: "16px", cursor: "pointer",border: "none",borderRadius: "5px",background: "#4CAF50",color: "white",marginTop: "20px"}}>
-          Start
-        </button>
-      </div>
+        <FreeRoamInstructions handleStart={handleStart} />
       )}
+      {(gameState === "FREEROAM") && (
+        <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 2000 }} />
+      )}
+      {/* <Badges /> */}
     </div>
   );
 }
