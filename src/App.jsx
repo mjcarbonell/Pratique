@@ -69,7 +69,7 @@ function App() {
       {(gameState === "FREEROAM") && (
         <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 2000 }} />
       )}
-      <Badges />
+      {/* <Badges /> */}
     </div>
   );
 }
