@@ -1,4 +1,4 @@
-import { KeyboardControls, Loader, useFont, useProgress, Text, Html } from "@react-three/drei";
+import { KeyboardControls, Loader, useFont, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva } from "leva";
@@ -7,16 +7,16 @@ import { Experience } from "./components/Experience";
 import { ExperienceFreeRoam } from "./components/ExperienceFreeRoam";
 import { Menu } from "./components/Menu";
 import { gameStates, useGameStore } from "./store";
-import { FreeRoamInstructions } from "./components/FreeRoamInstructions"; // Import the new component
-import { Badges } from "./components/Badges"; // Import the new component
+import { FreeRoamInstructions } from "./components/FreeRoamInstructions";
+import { Badges } from "./components/Badges";
 import ChatBox from "./components/ChatBox";
 
-export const Controls = {forward: "forward", back: "back", left: "left", right: "right", jump: "jump", };
+export const Controls = { forward: "forward", back: "back", left: "left", right: "right", jump: "jump" };
 
 function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const handleStart = () => {
-    setHasStarted(true)
+    setHasStarted(true);
   };
   useFont.preload("./fonts/FrenchCanon.json");
   const { startGame, gameState, goToMenu } = useGameStore((state) => ({
@@ -25,9 +25,9 @@ function App() {
     goToMenu: state.goToMenu,
   }));
 
-  useEffect(() => { // Gets called whenever gameState changes  
+  useEffect(() => {
     console.log("Current game state:", gameState);
-    setHasStarted(false); 
+    setHasStarted(false);
   }, [gameState]);
 
   const map = useMemo(
@@ -57,21 +57,18 @@ function App() {
         </Canvas>
         <Loader />
         {progress === 100 && <Menu />}
-        <Menu />
       </KeyboardControls>
-      {/* Menu button */}
       {(gameState === "GAME" || gameState === "FREEROAM") && (
         <div style={{ position: "fixed", top: "10px", left: "10px", zIndex: 1000 }}>
-          <button onClick={goToMenu}>Back to Menu Test</button>
+          <button onClick={goToMenu}>Back to Menu</button>
         </div>
       )}
-      {/* Instructions for freeRoam level. If gameState is FREEROAM and hasStarted is false we show it.  */}
       {(gameState === "FREEROAM" && hasStarted === false) && (
-        <FreeRoamInstructions handleStart={handleStart} /> // Use the new component
+        <FreeRoamInstructions handleStart={handleStart} />
       )}
-      {/* {(gameState === "FREEROAM") && (
-        <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 1000 }} /> 
-      )} */}
+      {(gameState === "FREEROAM") && (
+        <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 2000 }} />
+      )}
       <Badges />
     </div>
   );

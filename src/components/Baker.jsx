@@ -5,7 +5,6 @@ import {
   RigidBody,
 } from "@react-three/rapier";
 import { useGameStore, playAudio } from "/src/store.js";
-import ChatBox from './ChatBox';
 
 export default function Baker(props) {
   const group = useRef();
@@ -39,9 +38,6 @@ export default function Baker(props) {
         position={[2, 0, -10.074]}
         name={"baker"}
       >
-        <Html position={[-1, 5, 2]}>
-          <ChatBox />
-        </Html>
         <CapsuleCollider args={[0.8, 0.4]} position={[-2, 1, 0]} sensor />
         <group ref={group} {...props} dispose={null}>
           <group name="Scene">

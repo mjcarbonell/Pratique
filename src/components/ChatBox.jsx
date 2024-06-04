@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useGameStore } from "../store";
+import { gameStates, useGameStore } from "../store";
 import { TextToSpeech } from "./TextToSpeech";
 import { GrammarCheck } from "./GrammarCheck"
 import axios from 'axios';
@@ -12,10 +12,17 @@ export const getPlayerScores = async () => {
 };
 
 const ChatBox = () => {
+  const { gameState } = useGameStore((state) => ({
+    gameState: state.gameState,
+  }));
+
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
+  const [count, setCount] = useState(0);
   const messagesEndRef = useRef(null);
+  const initialRender = useRef(true);
 
   const { setChatState } = useGameStore(
     (state) => ({
@@ -83,8 +90,11 @@ const ChatBox = () => {
   };
 
   useEffect(() => {
-    const initialMessage = "Bonjour! Comment puis-je vous aider aujourd'hui?";
-    addMessageWithTypingEffect(initialMessage, 'Baker');
+    if (initialRender.current) {
+      initialRender.current = false;
+      const initialMessage = "Bonjour! Comment puis-je vous aider aujourd'hui?";
+      addMessageWithTypingEffect(initialMessage, 'Baker');
+    }
   }, []);
   
   const handleSend = () => {
