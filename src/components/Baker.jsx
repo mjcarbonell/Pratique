@@ -17,6 +17,8 @@ export default function Baker(props) {
 //   const characterState = useGameStore((state) => state.characterState);
 
   useEffect(() => { // detects any change in the characterState value. 
+
+    // gets called anytime the player moves
     const currentAction = actions["IdleAnimation"];
     if (currentAction) {
       currentAction.reset().fadeIn(0.2).play();

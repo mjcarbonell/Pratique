@@ -5,23 +5,36 @@ import { useEffect, useRef } from "react";
 import { Controls } from "../App";
 import { gameStates, playAudio, useGameStore } from "../store";
 import Character from "./Character";
-
 import * as THREE from "three";
+import Baker from "./Baker";
 
 const JUMP_FORCE = 0.5;
 const MOVEMENT_SPEED = 0.1;
 const MAX_VEL = 3;
 const RUN_VEL = 1.5;
 
+
+let bakerTouched = false; 
+
 export const CharacterController = () => {
-  const { characterState, setCharacterState, gameState, chatState } = useGameStore(
+  const { characterState, setCharacterState, gameState, chatState, setBakerState } = useGameStore(
     (state) => ({
       character: state.characterState,
       setCharacterState: state.setCharacterState,
       gameState: state.gameState,
       chatState: state.chatState,
+      setBakerState: state.setBakerState,
     })
   );
+  // useEffect(() => {
+  //   console.log('changing bakerState, ', bakerTouched);
+  //   if (bakerTouched === true) {
+  //     setBakerState("TRUE");
+  //   } else {
+  //     setBakerState("FALSE");
+  //   }
+  // }, [bakerTouched]);
+
   const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
   const leftPressed = useKeyboardControls((state) => state[Controls.left]);
   const rightPressed = useKeyboardControls((state) => state[Controls.right]);
@@ -38,6 +51,12 @@ export const CharacterController = () => {
       return; // Disable movement if chatState is TRUE
     }
     
+    if (bakerTouched === true) {
+      setBakerState("TRUE");
+    } else {
+      setBakerState("FALSE");
+    }
+
     const impulse = { x: 0, y: 0, z: 0 };
     if (jumpPressed && isOnFloor.current) {
       impulse.y += JUMP_FORCE;
@@ -151,8 +170,14 @@ export const CharacterController = () => {
             resetPosition();
             playAudio("fall");
           }
-          if (other.rigidBodyObject.name === "baker") {
+          if (other.rigidBodyObject.name === "baker") { // Running into the baker shows the chatbox
+            bakerTouched = true; 
             playAudio("fall");
+          }
+        }}
+        onIntersectionExit={({ other }) => { // when player stops touching the baker, bakerTouched is false. 
+          if (other.rigidBodyObject.name === "baker") {
+            bakerTouched = false;
           }
         }}
       >

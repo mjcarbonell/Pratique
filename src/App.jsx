@@ -19,16 +19,21 @@ function App() {
     setHasStarted(true);
   };
   useFont.preload("./fonts/FrenchCanon.json");
-  const { startGame, gameState, goToMenu } = useGameStore((state) => ({
+  const { startGame, gameState, goToMenu, bakerState  } = useGameStore((state) => ({
     startGame: state.startGame,
     gameState: state.gameState,
     goToMenu: state.goToMenu,
+    bakerState: state.bakerState,
   }));
 
   useEffect(() => {
     console.log("Current game state:", gameState);
     setHasStarted(false);
   }, [gameState]);
+
+  useEffect(() => {
+    console.log("getting baker touch in app ", bakerState); 
+  }, [bakerState]);
 
   const map = useMemo(
     () => [
@@ -66,7 +71,7 @@ function App() {
       {(gameState === "FREEROAM" && hasStarted === false) && (
         <FreeRoamInstructions handleStart={handleStart} />
       )}
-      {(gameState === "FREEROAM") && (
+      {(gameState === "FREEROAM" && bakerState === "TRUE") && (
         <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 2000 }} />
       )}
       {/* <Badges /> */}

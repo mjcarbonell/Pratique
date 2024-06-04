@@ -16,7 +16,6 @@ const ChatBox = () => {
     gameState: state.gameState,
   }));
 
-
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
@@ -57,29 +56,34 @@ const ChatBox = () => {
   };
 
   const sendMessage = async (message, user = 'Player') => {
-    const newMessages = [...messages, { user, text: message }]; // Stack the message with the past messages between Player and NPC. 
+    const newMessages = [...messages, { user, text: message }];
     await addMessageWithTypingEffect(message, user);
-    
-    // Prepare the formatted messages for the API call
     const formattedMessages = [
       {
         role: "system",
-        content: "Vous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglaisVous êtes un boulanger français qui ne parle que français. Tout ce qu’on vous dira viendra de quelqu’un qui essaie d’apprendre le français. Vous ne comprenez pas l'anglais. S'ils parlent anglais, vous devez agir comme si vous ne compreniez pas."
+        content: `Vous êtes un boulanger français qui ne parle que français. Vous serez nourri d’une conversation entre vous et quelqu’un d’autre. Si quelqu’un fait une erreur d’orthographe ou de grammaire, vous pouvez la corriger poliment. S'ils parlent anglais, vous devriez parler français avec un peu d'anglais mélangé et les encourager à parler davantage français dans la conversation. Vous trouverez ci-dessous un exemple des messages que vous recevrez. Vous êtes le système et le joueur est l'utilisateur.
+        [
+        {"role": "système", "content": "exemple"},
+        {"role": "système", "content": "..."},
+        {"role": "utilisateur", "content": "..."},
+        {"role": "système", "content": "..."},
+        {"role": "utilisateur", "content": "..."}
+        ]»`
       },
       ...newMessages.map((msg) => ({
         role: msg.user === 'Player' ? 'user' : 'system',
         content: msg.text,
       }))
     ];
-    setAttempts(attempts => attempts += 1); // Increment the attempts counter
-    if (attempts == 1){ // When "attempt"==2 grader will grade up to the 3rd attempt. This is because   
+    setAttempts(attempts => attempts += 1);
+    if (attempts == 1){
       const localGradeResponse = await GrammarCheck(newMessages);
-      const localGradeList = localGradeResponse.split(':::'); // Split the string by ":"
+      const localGradeList = localGradeResponse.split(':::');
       gradeResponse = localGradeList[0]; 
       gradeReason = localGradeList[1]; 
-      console.log(localGradeList); 
     }
     try {
+      console.log("formatted messages: ", formattedMessages)
       const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
       const botMessage = response.data;
       await addMessageWithTypingEffect(botMessage, 'Baker');
@@ -109,8 +113,8 @@ const ChatBox = () => {
   const handleBlur = () => setChatState({ mode: "FALSE" });
 
   return (
-    <div className="chatbox-container">
-      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto'}}>
+    <div className="chatbox-container" style={{ maxWidth: '400px' }}>
+      <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto', wordWrap: 'break-word' }}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.user === 'Player' ? 'right' : 'left' }}>
             <strong>{msg.user}:</strong> {msg.text}
