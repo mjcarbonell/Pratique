@@ -8,8 +8,8 @@ import Character from "./Character";
 import * as THREE from "three";
 import Baker from "./Baker";
 
-const JUMP_FORCE = 0.5;
-const MOVEMENT_SPEED = 0.1;
+const JUMP_FORCE = 8; // 0.5 before 
+const MOVEMENT_SPEED = 1.2; // 0.1 before
 const MAX_VEL = 3;
 const RUN_VEL = 1.5;
 
@@ -26,15 +26,6 @@ export const CharacterController = () => {
       setBakerState: state.setBakerState,
     })
   );
-  // useEffect(() => {
-  //   console.log('changing bakerState, ', bakerTouched);
-  //   if (bakerTouched === true) {
-  //     setBakerState("TRUE");
-  //   } else {
-  //     setBakerState("FALSE");
-  //   }
-  // }, [bakerTouched]);
-
   const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
   const leftPressed = useKeyboardControls((state) => state[Controls.left]);
   const rightPressed = useKeyboardControls((state) => state[Controls.right]);
@@ -59,6 +50,7 @@ export const CharacterController = () => {
 
     const impulse = { x: 0, y: 0, z: 0 };
     if (jumpPressed && isOnFloor.current) {
+      console.log("here!")
       impulse.y += JUMP_FORCE;
       isOnFloor.current = false;
     }
@@ -156,13 +148,7 @@ export const CharacterController = () => {
 
   return (
     <group>
-      <RigidBody
-        ref={rigidbody}
-        colliders={false}
-        scale={[0.5, 0.5, 0.5]}
-        name={"mainCharacter"}
-        enabledRotations={[false, false, false]}
-        onCollisionEnter={() => {
+      <RigidBody ref={rigidbody} colliders={false} scale={[0.5, 0.5, 0.5]} name={"mainCharacter"} enabledRotations={[false, false, false]} onCollisionEnter={() => {
           isOnFloor.current = true;
         }}
         onIntersectionEnter={({ other }) => {
@@ -181,7 +167,7 @@ export const CharacterController = () => {
           }
         }}
       >
-        <CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
+        <CapsuleCollider args={[1, 1.2]} position={[0, 2.2, 0]} />
         <group ref={character}>
           <Character />
         </group>

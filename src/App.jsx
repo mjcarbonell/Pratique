@@ -54,7 +54,7 @@ function App() {
         <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [0, 20, 14], fov: 42 }}>
           <color attach="background" args={["#e3daf7"]} />
           <Suspense>
-            <Physics>
+            <Physics debug>
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && <ExperienceFreeRoam />}
             </Physics>

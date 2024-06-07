@@ -1,9 +1,6 @@
 import { useAnimations, useGLTF, Html } from "@react-three/drei";
 import React, { useEffect, useRef } from "react";
-import {
-  CapsuleCollider,
-  RigidBody,
-} from "@react-three/rapier";
+import {CapsuleCollider,RigidBody} from "@react-three/rapier";
 import { useGameStore, playAudio } from "/src/store.js";
 
 export default function Baker(props) {
@@ -13,13 +10,10 @@ export default function Baker(props) {
   const { nodes, materials, animations } = useGLTF("./models/baker/model.gltf");
   const { actions } = useAnimations(animations, group);
 
-
-//   const characterState = useGameStore((state) => state.characterState);
-
   useEffect(() => { // detects any change in the characterState value. 
 
     // gets called anytime the player moves
-    const currentAction = actions["IdleAnimation"];
+    const currentAction = actions["IdleAnimation"]; // we play idle animation the whole time. 
     if (currentAction) {
       currentAction.reset().fadeIn(0.2).play();
       return () => {
