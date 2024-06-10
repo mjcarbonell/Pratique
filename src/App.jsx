@@ -51,7 +51,7 @@ function App() {
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       <KeyboardControls map={map}>
         <Leva hidden />
-        <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [0, 20, 14], fov: 42 }}>
+        <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [0, 40, 14], fov: 42 }}>
           <color attach="background" args={["#e3daf7"]} />
           <Suspense>
             <Physics debug>

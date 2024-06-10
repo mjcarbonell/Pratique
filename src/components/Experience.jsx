@@ -1,15 +1,13 @@
 import { ContactShadows, Environment, Text, Html } from "@react-three/drei";
-import {
-  CuboidCollider,
-  CylinderCollider,
-  RigidBody,
-} from "@react-three/rapier";
+import {CuboidCollider,CylinderCollider,RigidBody} from "@react-three/rapier";
 import { useGameStore } from "../store";
 import { CharacterController } from "./CharacterController";
 import { KanaSpots } from "./KanaSpots";
 import { Kicker } from "./Kicker";
 import { Stage } from "./Stage";
 import { Roam } from "./Roam"
+import { Car } from "./Car"
+
 export const Experience = () => {
   const { currentKana, lastWrongKana, goToMenu } = useGameStore((state) => ({
     currentKana: state.currentKana,
@@ -78,7 +76,7 @@ export const Experience = () => {
           position-y={-0.5}
           friction={2}
         >
-          <CylinderCollider args={[1 / 2, 5]} />
+          <CylinderCollider args={[1/2, 5]} />
         </RigidBody>
         {/* CHARACTER */}
         
@@ -86,6 +84,7 @@ export const Experience = () => {
         {/* <Baker /> */}
         {/* KANA */}
         <KanaSpots />
+        <Car centerX={-12} centerZ={-12} radius={7} speed={0.9}/>
       </group>
     </>
   );
