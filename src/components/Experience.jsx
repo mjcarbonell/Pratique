@@ -54,7 +54,7 @@ export const Experience = () => {
         {/* FLOOR */}
         <RigidBody colliders={false} type="fixed" name="void">
           <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}> 
-            <planeGeometry args={[50, 50]} />
+            <planeGeometry args={[100, 100]} />
             <meshBasicMaterial color="#e3daf7" toneMapped={false} />
           </mesh>
           <CuboidCollider position={[0, -3.5, 0]} args={[50, 0.1, 50]} sensor />
@@ -84,7 +84,7 @@ export const Experience = () => {
         {/* <Baker /> */}
         {/* KANA */}
         <KanaSpots />
-        <Car centerX={-12} centerZ={-12} radius={7} speed={0.9}/>
+        {/* <Car centerX={-12} centerZ={-12} radius={7} speed={0.9}/> */}
       </group>
     </>
   );

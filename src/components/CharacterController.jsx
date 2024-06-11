@@ -14,7 +14,7 @@ const MAX_VEL = 3;
 const RUN_VEL = 1.5;
 
 
-let bakerTouched = false; 
+// let bakerTouched = false; 
 
 export const CharacterController = () => {
   const { characterState, setCharacterState, gameState, chatState, setBakerState } = useGameStore(
@@ -42,11 +42,11 @@ export const CharacterController = () => {
       return; // Disable movement if chatState is TRUE
     }
     
-    if (bakerTouched === true) {
-      setBakerState("TRUE");
-    } else {
-      setBakerState("FALSE");
-    }
+    // if (bakerTouched === true) {
+    //   setBakerState("TRUE");
+    // } else {
+    //   setBakerState("FALSE");
+    // }
 
     const impulse = { x: 0, y: 0, z: 0 };
     if (jumpPressed && isOnFloor.current) {
@@ -156,16 +156,16 @@ export const CharacterController = () => {
             resetPosition();
             playAudio("fall");
           }
-          if (other.rigidBodyObject.name === "baker") { // Running into the baker shows the chatbox
-            bakerTouched = true; 
-            playAudio("fall");
-          }
+          // if (other.rigidBodyObject.name === "baker") { // Running into the baker shows the chatbox
+          //   bakerTouched = true; 
+          //   playAudio("fall");
+          // }
         }}
-        onIntersectionExit={({ other }) => { // when player stops touching the baker, bakerTouched is false. 
-          if (other.rigidBodyObject.name === "baker") {
-            bakerTouched = false;
-          }
-        }}
+        // onIntersectionExit={({ other }) => { // when player stops touching the baker, bakerTouched is false. 
+        //   if (other.rigidBodyObject.name === "baker") {
+        //     bakerTouched = false;
+        //   }
+        // }}
       >
         <CapsuleCollider args={[1, 1.2]} position={[0, 2.2, 0]} />
         <group ref={character}>

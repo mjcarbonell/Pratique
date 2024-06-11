@@ -88,6 +88,7 @@ export const useGameStore = create(
         const currentKana = state.level[currentStage].find(
           (word) => word.correct
         );
+        console.log("here?")
         playAudio(`correct${currentStage % 3}`, () => {
           playAudio(`frenchWords/${currentKana.word}`);
         });
