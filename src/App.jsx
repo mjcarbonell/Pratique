@@ -55,7 +55,7 @@ function App() {
           <color attach="background" args={["#e3daf7"]} />
           <fog attach="fog" args={["#dbecfb", 30, 40]} />
           <Suspense>
-            <Physics >
+            <Physics>
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && <ExperienceFreeRoam />}
             </Physics>
@@ -74,7 +74,7 @@ function App() {
         <FreeRoamInstructions handleStart={handleStart} />
       )}
       {(gameState === "FREEROAM") && (  // Used to have  && bakerState === "TRUE"
-        <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 2000 }} />
+        <ChatBox style={{ position: "fixed", bottom: "10px", right: "10px", zIndex: 2000 }} />
       )}
       {/* <Badges /> */}
     </div>

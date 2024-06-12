@@ -29,12 +29,11 @@ export default function Character(props) {
       console.error(`Action for state "${characterState}" not found. Available actions are:`, Object.keys(actions));
     }
   }, [characterState, actions]);
-
-  
+    
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="tourist" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
+        <group name="tourist" rotation={[Math.PI / 2, 0, 0]} scale={0.025}>
           <primitive object={nodes.mixamorigHips} />
           <skinnedMesh name="tmpbqj9rwud001" geometry={nodes.tmpbqj9rwud001.geometry} material={materials['Material.005']} skeleton={nodes.tmpbqj9rwud001.skeleton} />
         </group>

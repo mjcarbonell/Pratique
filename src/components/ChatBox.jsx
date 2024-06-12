@@ -4,7 +4,6 @@ import { TextToSpeech } from "./TextToSpeech";
 import { GrammarCheck } from "./GrammarCheck"
 import axios from 'axios';
 
-
 let gradeResponse = '';
 let gradeReason = '';
 
@@ -12,7 +11,7 @@ export const getPlayerScores = async () => {
   return [gradeResponse, gradeReason]; 
 };
 
-const ChatBox = () => {
+const ChatBox = (style) => {
   const { gameState, setChatState, bakerState, setBakerState } = useGameStore((state) => ({
     gameState: state.gameState,
     setChatState: state.setChatState,
@@ -24,6 +23,7 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [count, setCount] = useState(0);
+  const [checkedItems, setCheckedItems] = useState([false, false]);
   const messagesEndRef = useRef(null);
   const initialRender = useRef(true);
 
@@ -75,6 +75,7 @@ const ChatBox = () => {
       }))
     ];
     setAttempts(attempts => attempts += 1); // add another attempt after sending a message
+    greenChecked(1); 
     if (attempts == 9){ // grade the conversation after 9 attempts
       const localGradeResponse = await GrammarCheck(newMessages);
       const localGradeList = localGradeResponse.split(':::');
@@ -111,13 +112,35 @@ const ChatBox = () => {
   const handleFocus = () => setChatState({ mode: "TRUE" });
   const handleBlur = () => setChatState({ mode: "FALSE" });
 
+  const greenChecked = (index) => {
+    console.log("green checked");
+    setCheckedItems((prev) => {
+      console.log("prev : ", prev);
+      const newCheckedItems = [...prev];
+      newCheckedItems[index] = true;
+      console.log("new items: ", newCheckedItems);
+      return newCheckedItems;
+    });
+  };
+
   return (
-    <div className="chatbox-container" style={{ maxWidth: '400px' }}>
-      <div className="chatbox-icon" style={{ position: 'absolute', top: '-5px', left: '-100px' }}>
-      {/* <video src="/icons/bakerGif.mp4" style={{ width: '100px', height: '100px', borderRadius: '50%' }} autoPlay loop muted /> */}
-        <img src={`/icons/baker${bakerState}.png`} alt="Portrait" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+    <>
+     <div className="checklist" style={{ position: 'fixed', top: '90px', left: '10px', backgroundColor: '#333', padding: '10px', borderRadius: '5px', color: '#fff', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+        <p>Checklist:</p>
+        <ol>
+          {['Use the word Bonjour', 'Use the words du pain'].map((item, index) => (
+            <li key={index} className={`checklist-item ${checkedItems[index] ? 'checked' : ''}`}>
+              <span className="check-circle">{checkedItems[index] && '✔'}</span> {item}
+            </li>
+          ))}
+        </ol>
       </div>
 
+    <div className="chatbox-container" style={{ ...style, maxWidth: '400px' }}>
+      
+      <div className="chatbox-icon" style={{ position: 'absolute', top: '-5px', left: '-100px' }}>
+        <img src={`/icons/baker${bakerState}.png`} alt="Portrait" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+      </div>
       <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto', wordWrap: 'break-word' }}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.user === 'Player' ? 'right' : 'left' }}>
@@ -144,6 +167,9 @@ const ChatBox = () => {
         Attempts: {attempts} / 10
       </div>
     </div>
+    
+    </>
+    
   );
 };
 
