@@ -19,9 +19,6 @@ const ChatBox = () => {
     bakerState: state.bakerState,
     setBakerState: state.setBakerState,
   }));
-  useEffect(() => { // when we used to toggle the chatbox when baker and player collided no more. 
-    console.log("bakerState useEffect: ", bakerState); 
-  }, [bakerState]);
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -54,7 +51,6 @@ const ChatBox = () => {
         }
       }, 50);
       TextToSpeech(message, user, bakerState, setBakerState);
-      // setBakerState((bakerState + 1) % 2); 
     });
   };
 
@@ -114,7 +110,6 @@ const ChatBox = () => {
 
   const handleFocus = () => setChatState({ mode: "TRUE" });
   const handleBlur = () => setChatState({ mode: "FALSE" });
-
 
   return (
     <div className="chatbox-container" style={{ maxWidth: '400px' }}>
