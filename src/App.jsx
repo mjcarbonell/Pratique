@@ -1,4 +1,4 @@
-import { KeyboardControls, Loader, useFont, useProgress } from "@react-three/drei";
+import { KeyboardControls, Loader, useFont, useProgress, OrbitControls  } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva } from "leva";
@@ -31,9 +31,9 @@ function App() {
     setHasStarted(false);
   }, [gameState]);
 
-  useEffect(() => {
-    console.log("getting baker touch in app ", bakerState); 
-  }, [bakerState]);
+  // useEffect(() => { // when we used to toggle the chatbox when baker and player collided no more. 
+  //   console.log("getting baker touch in app ", bakerState); 
+  // }, [bakerState]);
 
   const map = useMemo(
     () => [
@@ -51,14 +51,16 @@ function App() {
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       <KeyboardControls map={map}>
         <Leva hidden />
-        <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [0, 20, 14], fov: 42 }}>
+        <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [2, 40, 14], fov: 42 }}>
           <color attach="background" args={["#e3daf7"]} />
+          <fog attach="fog" args={["#dbecfb", 30, 40]} />
           <Suspense>
-            <Physics>
+            <Physics >
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && <ExperienceFreeRoam />}
             </Physics>
           </Suspense>
+          {/* <OrbitControls /> */}
         </Canvas>
         <Loader />
         {progress === 100 && <Menu />}
@@ -71,7 +73,7 @@ function App() {
       {(gameState === "FREEROAM" && hasStarted === false) && (
         <FreeRoamInstructions handleStart={handleStart} />
       )}
-      {(gameState === "FREEROAM" && bakerState === "TRUE") && (
+      {(gameState === "FREEROAM") && (  // Used to have  && bakerState === "TRUE"
         <ChatBox style={{ position: "fixed", top: "10px", right: "10px", zIndex: 2000 }} />
       )}
       {/* <Badges /> */}

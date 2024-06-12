@@ -48,7 +48,7 @@ export const useGameStore = create(
     mode: "default",
     gameState: gameStates.MENU,
     chatState: "FALSE",
-    bakerState: "FALSE", 
+    bakerState: 0, 
     setBakerState: (state) => set({ bakerState: state }),
     wrongAnswers: 0,
 

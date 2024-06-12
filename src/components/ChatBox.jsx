@@ -4,6 +4,7 @@ import { TextToSpeech } from "./TextToSpeech";
 import { GrammarCheck } from "./GrammarCheck"
 import axios from 'axios';
 
+
 let gradeResponse = '';
 let gradeReason = '';
 
@@ -12,9 +13,15 @@ export const getPlayerScores = async () => {
 };
 
 const ChatBox = () => {
-  const { gameState } = useGameStore((state) => ({
+  const { gameState, setChatState, bakerState, setBakerState } = useGameStore((state) => ({
     gameState: state.gameState,
+    setChatState: state.setChatState,
+    bakerState: state.bakerState,
+    setBakerState: state.setBakerState,
   }));
+  useEffect(() => { // when we used to toggle the chatbox when baker and player collided no more. 
+    console.log("bakerState useEffect: ", bakerState); 
+  }, [bakerState]);
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -23,11 +30,6 @@ const ChatBox = () => {
   const messagesEndRef = useRef(null);
   const initialRender = useRef(true);
 
-  const { setChatState } = useGameStore(
-    (state) => ({
-      setChatState: state.setChatState,
-    })
-  );
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -51,7 +53,8 @@ const ChatBox = () => {
           resolve();
         }
       }, 50);
-      TextToSpeech(message, user);
+      TextToSpeech(message, user, bakerState, setBakerState);
+      // setBakerState((bakerState + 1) % 2); 
     });
   };
 
@@ -75,8 +78,8 @@ const ChatBox = () => {
         content: msg.text,
       }))
     ];
-    setAttempts(attempts => attempts += 1);
-    if (attempts == 1){
+    setAttempts(attempts => attempts += 1); // add another attempt after sending a message
+    if (attempts == 9){ // grade the conversation after 9 attempts
       const localGradeResponse = await GrammarCheck(newMessages);
       const localGradeList = localGradeResponse.split(':::');
       gradeResponse = localGradeList[0]; 
@@ -112,8 +115,14 @@ const ChatBox = () => {
   const handleFocus = () => setChatState({ mode: "TRUE" });
   const handleBlur = () => setChatState({ mode: "FALSE" });
 
+
   return (
     <div className="chatbox-container" style={{ maxWidth: '400px' }}>
+      <div className="chatbox-icon" style={{ position: 'absolute', top: '-5px', left: '-100px' }}>
+      {/* <video src="/icons/bakerGif.mp4" style={{ width: '100px', height: '100px', borderRadius: '50%' }} autoPlay loop muted /> */}
+        <img src={`/icons/baker${bakerState}.png`} alt="Portrait" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+      </div>
+
       <div className="chatbox-messages" style={{ maxHeight: '300px', overflowY: 'auto', wordWrap: 'break-word' }}>
         {messages.map((msg, index) => (
           <div key={index} style={{ textAlign: msg.user === 'Player' ? 'right' : 'left' }}>
