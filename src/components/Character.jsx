@@ -34,9 +34,9 @@ export default function Character(props) {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="character" rotation={[Math.PI / 2, 0, 0]} scale={0.02}>
+        <group name="tourist" rotation={[Math.PI / 2, 0, 0]} scale={0.025}>
           <primitive object={nodes.mixamorigHips} />
-          <skinnedMesh name="tmphpvdbjjc001" geometry={nodes.tmphpvdbjjc001.geometry} material={materials['Material.001']} skeleton={nodes.tmphpvdbjjc001.skeleton} />
+          <skinnedMesh name="tmpbqj9rwud001" geometry={nodes.tmpbqj9rwud001.geometry} material={materials['Material.005']} skeleton={nodes.tmpbqj9rwud001.skeleton} />
         </group>
       </group>
     </group>
