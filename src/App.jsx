@@ -55,7 +55,7 @@ function App() {
           <color attach="background" args={["#e3daf7"]} />
           <fog attach="fog" args={["#dbecfb", 30, 40]} />
           <Suspense>
-            <Physics debug>
+            <Physics >
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && <ExperienceFreeRoam />}
             </Physics>

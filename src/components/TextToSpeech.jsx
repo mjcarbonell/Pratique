@@ -8,14 +8,12 @@ export const TextToSpeech = async (text, voice, bakerState, setBakerState) => {
 
     const audio = new Audio(`data:audio/mp3;base64,${base64Audio}`);
     audio.play();
-    if(voice == "Player"){
-      audio.onended = () => {
-        setTimeout(() => {
-          const randomState = Math.floor(Math.random() * 3); // Random number between 0 and 2
-          setBakerState(randomState);
-          // setBakerState((bakerState + 1) % 3);
-        }, 200); // 2000 milliseconds = 2 seconds
-      };
+    if (voice == "Baker") {
+      let randomState;
+      do {
+        randomState = Math.floor(Math.random() * 5); // Random number between 0 and 4
+      } while (randomState === bakerState);
+      setBakerState(randomState);
     }
   } catch (error) {
     console.error('Error fetching TTS response:', error);
