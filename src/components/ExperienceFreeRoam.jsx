@@ -47,15 +47,16 @@ export const ExperienceFreeRoam = () => {
           color={"#aa9acd"}
         />
         {/* STAGE */}
-        <Roam position-y={-0.92} />
         <RigidBody
           colliders={false}
           type="fixed"
           position-y={-0.5}
           friction={2}
         >
-          <CylinderCollider args={[1/2 , 5]}/>
+          <CylinderCollider args={[1/2, 5]} />
         </RigidBody>
+
+        <Roam position-y={-0.92} />
         {/* CHARACTER */}
         <CharacterController />
         {/* BAKER */}

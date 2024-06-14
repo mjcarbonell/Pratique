@@ -156,16 +156,7 @@ export const CharacterController = () => {
             resetPosition();
             playAudio("fall");
           }
-          // if (other.rigidBodyObject.name === "baker") { // Running into the baker shows the chatbox
-          //   bakerTouched = true; 
-          //   playAudio("fall");
-          // }
         }}
-        // onIntersectionExit={({ other }) => { // when player stops touching the baker, bakerTouched is false. 
-        //   if (other.rigidBodyObject.name === "baker") {
-        //     bakerTouched = false;
-        //   }
-        // }}
       >
         <CapsuleCollider args={[1, 1.2]} position={[0, 2.2, 0]} />
         <group ref={character}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { gameStates, useGameStore } from "../store";
+import { useGameStore } from "../store";
 import { TextToSpeech } from "./TextToSpeech";
 import { GrammarCheck } from "./GrammarCheck"
 import axios from 'axios';
@@ -12,8 +12,8 @@ export const getPlayerScores = async () => {
 };
 
 const ChatBox = (style) => {
-  const { gameState, setChatState, bakerState, setBakerState } = useGameStore((state) => ({
-    gameState: state.gameState,
+  const {setChatState, bakerState, setBakerState, checklist } = useGameStore((state) => ({
+    checklist: state.checklist,
     setChatState: state.setChatState,
     bakerState: state.bakerState,
     setBakerState: state.setBakerState,
@@ -23,7 +23,7 @@ const ChatBox = (style) => {
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [count, setCount] = useState(0);
-  const [checkedItems, setCheckedItems] = useState([false, false]);
+  const [checkedItems, setCheckedItems] = useState([false, false, false]);
   const messagesEndRef = useRef(null);
   const initialRender = useRef(true);
 
@@ -75,7 +75,6 @@ const ChatBox = (style) => {
       }))
     ];
     setAttempts(attempts => attempts += 1); // add another attempt after sending a message
-    greenChecked(1); 
     if (attempts == 9){ // grade the conversation after 9 attempts
       const localGradeResponse = await GrammarCheck(newMessages);
       const localGradeList = localGradeResponse.split(':::');
@@ -99,6 +98,7 @@ const ChatBox = (style) => {
       const initialMessage = "Bonjour! Comment puis-je vous aider aujourd'hui?";
       addMessageWithTypingEffect(initialMessage, 'Baker');
     }
+    console.log("checklist: ", checklist)
   }, []);
   
   const handleSend = () => {
@@ -108,7 +108,6 @@ const ChatBox = (style) => {
       sendMessage(userInput, 'Player');
     }
   };
-
   const handleFocus = () => setChatState({ mode: "TRUE" });
   const handleBlur = () => setChatState({ mode: "FALSE" });
 
@@ -122,15 +121,16 @@ const ChatBox = (style) => {
       return newCheckedItems;
     });
   };
-
+  
   return (
     <>
      <div className="checklist" style={{ position: 'fixed', top: '90px', left: '10px', backgroundColor: '#333', padding: '10px', borderRadius: '5px', color: '#fff', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <p>Checklist:</p>
         <ol>
-          {['Use the word Bonjour', 'Use the words du pain'].map((item, index) => (
-            <li key={index} className={`checklist-item ${checkedItems[index] ? 'checked' : ''}`}>
-              <span className="check-circle">{checkedItems[index] && '✔'}</span> {item}
+          {checklist.map((item, index) => (
+            // Depending on if the checkedItems[Index] is true we used different css className
+            <li key={index} className={`checklist-item ${checkedItems[index] ? 'checked' : ''}`}> 
+              <span className="check-circle">{checkedItems[index] && '✔'}</span> {`Use the word "${item.word}" (${item.english})`}
             </li>
           ))}
         </ol>

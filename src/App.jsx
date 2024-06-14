@@ -53,14 +53,14 @@ function App() {
         <Leva hidden />
         <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [2, 40, 14], fov: 42 }}>
           <color attach="background" args={["#e3daf7"]} />
-          <fog attach="fog" args={["#dbecfb", 30, 40]} />
+          {/* <fog attach="fog" args={["#dbecfb", 30, 40]} /> */}
           <Suspense>
-            <Physics>
+            <Physics debug>
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}
               {gameState === "FREEROAM" && <ExperienceFreeRoam />}
             </Physics>
           </Suspense>
-          {/* <OrbitControls /> */}
+          <OrbitControls />
         </Canvas>
         <Loader />
         {progress === 100 && <Menu />}

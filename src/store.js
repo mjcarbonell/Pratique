@@ -21,24 +21,37 @@ export const generateGameLevel = ({ nbStages }) => {
   const level = [];
   const goodKanas = [];
 
-  for (let i = 0; i < nbStages; i++) {
-    const stage = [];
-    const nbOptions = 3 + i;
-    for (let j = 0; j < nbOptions; j++) {
-      let kana = null;
-      while (!kana || stage.includes(kana) || goodKanas.includes(kana)) {
-        kana = frenchWords[Math.floor(Math.random() * frenchWords.length)];
+  for (let i = 0; i < nbStages; i++) { // for every i up until specified stages (usually 7)
+    const stage = []; // define stage. An array
+    const nbOptions = 3 + i; // define options to be 3 + the current stage e.g. 0, 1, 2, 3... (Basically the first stage starts with 3 the second stage starts with 4)
+    for (let j = 0; j < nbOptions; j++) { // for every j up until options (usually 10 because stages is usally 7). 
+      let kana = null; // define kana to be null 
+      while (!kana || stage.includes(kana) || goodKanas.includes(kana)) { // While loop to ensure we pick a random kana that 1. exist 2. is not in the stage already 3. is not in the good kanas. 
+        kana = frenchWords[Math.floor(Math.random() * frenchWords.length)]; // kana will be defined as one of the random french words. 
       }
-      stage.push(kana);
+      stage.push(kana); // We push the kana when it fulfilles all conditions 
     }
-    const goodKana = stage[Math.floor(Math.random() * stage.length)];
-    goodKana.correct = true;
+    const goodKana = stage[Math.floor(Math.random() * stage.length)]; // We define a goodKana for every stage 
+    goodKana.correct = true; // set it's correct variable to true. 
     goodKanas.push(goodKana);
     level.push(stage);
   }
   return level;
 };
-
+export const generateFreeRoam = () => {
+  const level = []; // what we are returning;
+  const checklist = []
+  // we want a checklist of 3 randomly selected words
+  for(let i=0; i < 3; i++){
+    let word = null; 
+    while(!word || checklist.includes(word)){
+      word = frenchWords[Math.floor(Math.random() * frenchWords.length)];
+    }
+    checklist.push(word);
+  }
+  level.push(checklist);
+  return level; 
+};
 export const useGameStore = create(
   subscribeWithSelector((set, get) => ({
     level: null,
@@ -47,10 +60,13 @@ export const useGameStore = create(
     lastWrongKana: null,
     mode: "default",
     gameState: gameStates.MENU,
+    wrongAnswers: 0,
+    // FOR FREE ROAM
     chatState: "FALSE",
     bakerState: 0, 
     setBakerState: (state) => set({ bakerState: state }),
-    wrongAnswers: 0,
+    checklist: [],
+
 
 
     // VOCAB GAME 
@@ -117,12 +133,14 @@ export const useGameStore = create(
       set({
         characterState,
       }),
+    // FREEROAM
     startFreeRoam: ({ mode }) => { 
-      console.log(mode)
-      playAudio("start"); 
+      playAudio("start");
+      const level = generateFreeRoam(); // level contains necessary information. level[0] is the checklist 
       set({
         gameState: gameStates.FREEROAM,
         mode,
+        checklist: level[0],
       });
     },
     setChatState: ({ mode }) => { // mode can be "TRUE" or "FALSE"
