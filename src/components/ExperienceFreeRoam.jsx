@@ -50,13 +50,13 @@ export const ExperienceFreeRoam = () => {
         <RigidBody
           colliders={false}
           type="fixed"
-          position-y={-0.5}
+          position-y={-0.1}
           friction={2}
         >
-          <CylinderCollider args={[1/2, 5]} />
+          <CuboidCollider args={[50, 0.1, 50]} />
         </RigidBody>
 
-        <Roam position-y={-0.92} />
+        <Roam position-x={5} position-y={-0.92} position-z={-25} rotation={[0, Math.PI / -70, 0]}/>
         {/* CHARACTER */}
         <CharacterController />
         {/* BAKER */}

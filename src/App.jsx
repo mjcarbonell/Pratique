@@ -60,7 +60,7 @@ function App() {
               {gameState === "FREEROAM" && <ExperienceFreeRoam />}
             </Physics>
           </Suspense>
-          <OrbitControls />
+          {/* <OrbitControls /> */}
         </Canvas>
         <Loader />
         {progress === 100 && <Menu />}
@@ -70,9 +70,9 @@ function App() {
           <button onClick={goToMenu}>Back to Menu</button>
         </div>
       )}
-      {(gameState === "FREEROAM" && hasStarted === false) && (
+      {/* {(gameState === "FREEROAM" && hasStarted === false) && (
         <FreeRoamInstructions handleStart={handleStart} />
-      )}
+      )} */}
       {(gameState === "FREEROAM") && (  // Used to have  && bakerState === "TRUE"
         <ChatBox style={{ position: "fixed", bottom: "10px", right: "10px", zIndex: 2000 }} />
       )}
