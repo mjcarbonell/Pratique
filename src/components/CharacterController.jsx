@@ -41,12 +41,6 @@ export const CharacterController = () => {
     if (chatState === "TRUE") {
       return; // Disable movement if chatState is TRUE
     }
-    
-    // if (bakerTouched === true) {
-    //   setBakerState("TRUE");
-    // } else {
-    //   setBakerState("FALSE");
-    // }
 
     const impulse = { x: 0, y: 0, z: 0 };
     if (jumpPressed && isOnFloor.current) {
@@ -85,12 +79,10 @@ export const CharacterController = () => {
         setCharacterState("Idle");
       }
     }
-
     if (changeRotation) {
       const angle = Math.atan2(linvel.x, linvel.z);
       character.current.rotation.y = angle;
     }
-
     // CAMERA FOLLOW
     const characterWorldPosition = character.current.getWorldPosition(
       new THREE.Vector3()
@@ -101,7 +93,13 @@ export const CharacterController = () => {
       characterWorldPosition.z + 14
     );
     if (gameState === gameStates.GAME || gameState === gameStates.FREEROAM) {
-      targetCameraPosition.y = 9;
+      if(gameState === "FREEROAM"){
+        targetCameraPosition.y = 5;
+      }
+      else{
+        targetCameraPosition.y = 12;
+      }
+    
     }
     if (gameState !== gameStates.GAME && gameState !== gameStates.FREEROAM) {
       targetCameraPosition.y = 0;

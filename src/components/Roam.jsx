@@ -9,12 +9,7 @@ import * as THREE from 'three';
 export function Roam(props) {
   const { nodes, materials } = useGLTF('./models/roam/model.gltf');
 
-  const getBoundingBoxSize = (geometry) => {
-    const box = new THREE.Box3().setFromObject(new THREE.Mesh(geometry));
-    const size = new THREE.Vector3();
-    box.getSize(size);
-    return size;
-  };
+  
 
   return (
     <group {...props} dispose={null}>
@@ -23,10 +18,65 @@ export function Roam(props) {
       <mesh geometry={nodes.sidewalk1.geometry} material={materials['Material.015']} />
       <mesh geometry={nodes.sidewalk2.geometry} material={materials['Material.015']} />
       <mesh geometry={nodes.tmpzeuyzm5h001.geometry} material={materials['Material.017']} />
-      <mesh geometry={nodes.Terrain001_envelope.geometry} material={nodes.Terrain001_envelope.material} />
-      <mesh geometry={nodes.tmpgp_truo6.geometry} material={materials['Material.038']} />
-      <mesh geometry={nodes.bakery_1.geometry} material={materials['Material.001']} />
-      <mesh geometry={nodes.bakery_2.geometry} material={materials['Material.002']} />
+      <mesh geometry={nodes.eiffel.geometry} material={materials['Material.038']} />
+      <mesh geometry={nodes.tmpzeuyzm5h003.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h004.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h005.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h006.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h008.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h009.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h010.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h011.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h012.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h013.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h014.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h015.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h016.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h017.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h018.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h019.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h020.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h021.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h022.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h023.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h024.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h025.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h026.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h027.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h028.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h029.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h030.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h031.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h032.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h033.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h034.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h035.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h036.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h037.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h038.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h039.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h040.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h041.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h042.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h043.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h044.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h045.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h046.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h047.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.Creperie.geometry} material={materials['Material.022']} />
+      <mesh geometry={nodes.tmpzeuyzm5h049.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h050.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h051.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h052.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h053.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h054.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h055.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h056.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h057.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h058.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h059.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h060.geometry} material={materials['Material.017']} />
+      <mesh geometry={nodes.tmpzeuyzm5h061.geometry} material={materials['Material.017']} />
       <mesh geometry={nodes.tmpjxuqkcug004.geometry} material={materials['Material.009']} />
       <mesh geometry={nodes.tmpjxuqkcug004_1.geometry} material={materials['Material.004']} />
       <mesh geometry={nodes.tmpjxuqkcug004_2.geometry} material={materials['Material.007']} />

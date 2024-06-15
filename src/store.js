@@ -65,6 +65,7 @@ export const useGameStore = create(
     chatState: "FALSE",
     bakerState: 0, 
     setBakerState: (state) => set({ bakerState: state }),
+    setGameState: (state) => set({ gameState: state }),
     checklist: [],
 
 

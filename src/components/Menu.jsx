@@ -40,7 +40,7 @@ export const Menu = () => {
         </div>
       </div>
       {/* This button is disabled unless we are in GAME_OVER state */}
-      <div className={`scores ${gameState !== gameStates.GAME_OVER ? "scores--hidden" : ""}`}>
+      <div className={`scores ${ (gameState !== gameStates.GAME_OVER) ? "scores--hidden" : ""}`}>
         <h1>toutes nos félicitations</h1>
         <button onClick={goToMenu} disabled={gameState !== gameStates.GAME_OVER}> 
           Go to Menu

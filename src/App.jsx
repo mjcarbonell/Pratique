@@ -31,10 +31,6 @@ function App() {
     setHasStarted(false);
   }, [gameState]);
 
-  // useEffect(() => { // when we used to toggle the chatbox when baker and player collided no more. 
-  //   console.log("getting baker touch in app ", bakerState); 
-  // }, [bakerState]);
-
   const map = useMemo(
     () => [
       { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
@@ -53,7 +49,7 @@ function App() {
         <Leva hidden />
         <Canvas style={{ width: "100%", height: "100%" }} shadows camera={{ position: [2, 40, 14], fov: 42 }}>
           <color attach="background" args={["#e3daf7"]} />
-          {/* <fog attach="fog" args={["#dbecfb", 30, 40]} /> */}
+          <fog attach="fog" args={["#dbecfb", 30, 60]} />
           <Suspense>
             <Physics debug>
               {(gameState === "GAME" || gameState === "MENU") && <Experience />}

@@ -12,11 +12,12 @@ export const getPlayerScores = async () => {
 };
 
 const ChatBox = (style) => {
-  const {setChatState, bakerState, setBakerState, checklist } = useGameStore((state) => ({
+  const {setChatState, bakerState, setBakerState, checklist, setGameState } = useGameStore((state) => ({
     checklist: state.checklist,
     setChatState: state.setChatState,
     bakerState: state.bakerState,
     setBakerState: state.setBakerState,
+    setGameState: state.setGameState,
   }));
 
   const [messages, setMessages] = useState([]);
@@ -74,13 +75,19 @@ const ChatBox = (style) => {
         content: msg.text,
       }))
     ];
-    setAttempts(attempts => attempts += 1); // add another attempt after sending a message
-    if (attempts == 9){ // grade the conversation after 9 attempts
-      const localGradeResponse = await GrammarCheck(newMessages);
-      const localGradeList = localGradeResponse.split(':::');
-      gradeResponse = localGradeList[0]; 
-      gradeReason = localGradeList[1]; 
+    
+    console.log("before ", attempts)
+    const newAttempts = attempts + 1; 
+    setAttempts(newAttempts); // add another attempt after sending a message
+    console.log("after: ", newAttempts)
+    if(newAttempts == 2){
+        const localGradeResponse = await GrammarCheck(newMessages);
+        const localGradeList = localGradeResponse.split(':::');
+        gradeResponse = localGradeList[0]; 
+        gradeReason = localGradeList[1]; 
+        return; 
     }
+
     try {
       console.log("formatted messages: ", formattedMessages)
       const response = await axios.post('https://pratiquebackend-production.up.railway.app/api/openai', { messages: formattedMessages });
@@ -100,6 +107,17 @@ const ChatBox = (style) => {
     }
     console.log("checklist: ", checklist)
   }, []);
+  useEffect(() => {
+    const endGame = async () => {
+      if(attempts === 2){ // at 10 attempts we end the game. 
+        await addMessageWithTypingEffect("Game Over. Thank you for playing!", 'Baker');
+        // additional code to handle end of game
+        setGameState("GAME_OVER"); 
+        setChatState("FALSE")
+      }
+    };
+    endGame();
+  }, [attempts]);
   
   const handleSend = () => {
     if (input.trim() !== '') {
