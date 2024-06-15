@@ -12,12 +12,13 @@ export const getPlayerScores = async () => {
 };
 
 const ChatBox = (style) => {
-  const {setChatState, bakerState, setBakerState, checklist, setGameState } = useGameStore((state) => ({
+  const {setChatState, bakerState, setBakerState, checklist, setGameState, setGrade } = useGameStore((state) => ({
     checklist: state.checklist,
     setChatState: state.setChatState,
     bakerState: state.bakerState,
     setBakerState: state.setBakerState,
     setGameState: state.setGameState,
+    setGrade: state.setGrade, 
   }));
 
   const [messages, setMessages] = useState([]);
@@ -85,6 +86,7 @@ const ChatBox = (style) => {
         const localGradeList = localGradeResponse.split(':::');
         gradeResponse = localGradeList[0]; 
         gradeReason = localGradeList[1]; 
+        setGrade([gradeResponse, gradeReason]); 
         return; 
     }
 
@@ -102,7 +104,8 @@ const ChatBox = (style) => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
-      const initialMessage = "Bonjour! Comment puis-je vous aider aujourd'hui?";
+      const firstMessages = ["Bonjour! ", "Salut...", "Coucou ", "Allô", "Bon matin" ]
+      const initialMessage = firstMessages[Math.floor(Math.random() * 5)]; // Random number between 0 and 4
       addMessageWithTypingEffect(initialMessage, 'Baker');
     }
     console.log("checklist: ", checklist)
@@ -112,7 +115,7 @@ const ChatBox = (style) => {
       if(attempts === 2){ // at 10 attempts we end the game. 
         await addMessageWithTypingEffect("Game Over. Thank you for playing!", 'Baker');
         // additional code to handle end of game
-        setGameState("GAME_OVER"); 
+        setGameState("GAME_OVER_FREEROAM"); 
         setChatState("FALSE")
       }
     };

@@ -64,8 +64,10 @@ export const useGameStore = create(
     // FOR FREE ROAM
     chatState: "FALSE",
     bakerState: 0, 
+    grade: [], 
     setBakerState: (state) => set({ bakerState: state }),
     setGameState: (state) => set({ gameState: state }),
+    setGrade: (state) => set({ grade: state }),
     checklist: [],
 
 
