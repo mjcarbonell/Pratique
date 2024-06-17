@@ -1,4 +1,5 @@
 import { gameStates, useGameStore } from "../store";
+import React, { useState, useEffect, useRef } from 'react';
 
 export const Menu = () => {
   const { startGame, startFreeRoam, gameState, goToMenu, grade } = useGameStore((state) => ({
@@ -8,6 +9,9 @@ export const Menu = () => {
     goToMenu: state.goToMenu,
     grade: state.grade, 
   }));
+  useEffect(() => {
+    console.log("grade: ", grade)
+  }, [grade]);
 
   return (
     <>
@@ -49,7 +53,8 @@ export const Menu = () => {
       </div>
       <div className={`scores ${ (gameState !== "GAME_OVER_FREEROAM") ? "scores--hidden" : ""}`}>
         <h1>Good Stuff 😎</h1>
-        <h1>{grade}</h1>
+        <h1>{grade[1]}</h1>
+        <h1>Round ended with points: {grade[2]}</h1>
         <button onClick={goToMenu} disabled={gameState !== "GAME_OVER_FREEROAM"}> 
           Go to Menu
         </button>

@@ -40,16 +40,19 @@ export const generateGameLevel = ({ nbStages }) => {
 };
 export const generateFreeRoam = () => {
   const level = []; // what we are returning;
-  const checklist = []
+  const checklist = [];
+  const checklistXP = [];
   // we want a checklist of 3 randomly selected words
   for(let i=0; i < 3; i++){
     let word = null; 
     while(!word || checklist.includes(word)){
       word = frenchWords[Math.floor(Math.random() * frenchWords.length)];
     }
-    checklist.push(word);
+    checklist.push(word); // after we push a word we need to assign xp to that word. 10 xp per character. 
+    checklistXP.push(word.word.length * 10); 
   }
   level.push(checklist);
+  level.push(checklistXP);
   return level; 
 };
 export const useGameStore = create(
@@ -68,7 +71,7 @@ export const useGameStore = create(
     setBakerState: (state) => set({ bakerState: state }),
     setGameState: (state) => set({ gameState: state }),
     setGrade: (state) => set({ grade: state }),
-    checklist: [],
+    levelFreeRoam: null,
 
 
 
@@ -139,11 +142,11 @@ export const useGameStore = create(
     // FREEROAM
     startFreeRoam: ({ mode }) => { 
       playAudio("start");
-      const level = generateFreeRoam(); // level contains necessary information. level[0] is the checklist 
+      const levelFreeRoam = generateFreeRoam(); // level contains necessary information. level[0] is the checklist 
       set({
         gameState: gameStates.FREEROAM,
         mode,
-        checklist: level[0],
+        levelFreeRoam: levelFreeRoam,
       });
     },
     setChatState: ({ mode }) => { // mode can be "TRUE" or "FALSE"

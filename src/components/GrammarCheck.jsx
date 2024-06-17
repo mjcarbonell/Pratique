@@ -6,7 +6,7 @@ export const GrammarCheck = async (conversation) => { // passing in the entire c
     const formattedMessages = [
         {
             role: "system",
-            content: `You are grading the user's accuracy in a conversation. Every word counts as a point so if the user mispelled 1 out of their 5 total words, then their accuracy would be 20% because 1/5 =0.2 : Below is an example of the messages you will receive. Simply respond with a response percentage, e.g. "70%" followed by a delimiter ":::" and the reasons for their score. Your response should be formatted like below. 
+            content: `You are grading the user's accuracy in a conversation. Every word counts as a point so if the user mispelled 1 out of their 5 total words, then their accuracy would be 20% because 1/5 =0.2 : Below is an example of the messages you will receive. Simply respond with a response percentage, e.g. "70%" followed by a delimiter ":::" and the reasons for their score. Your response should be formatted like below. Be sure to make your response as if you were talking to the user directly like "You mispelled __" 
             "  80%  :::  [insert the reasons for their score] " `
         },
         ...conversation.map((msg) => ({
