@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ContactShadows, Environment, Html } from "@react-three/drei";
+import { useState, useEffect} from "react";
+import { useThree } from "@react-three/fiber";
+import { ContactShadows, Environment, Html, useTexture } from "@react-three/drei";
 import {
   CuboidCollider,
   CylinderCollider,
@@ -14,11 +15,12 @@ import { Kicker } from "./Kicker";
 import { Roam } from "./Roam";
 
 export const ExperienceFreeRoam = () => {
+  const { scene } = useThree();
   const { goToMenu } = useGameStore((state) => ({
     goToMenu: state.goToMenu,
   }));
-
-  return (
+  const map = useTexture("textures/lowPolyParis.jpg");
+  return (  
     <>
       {/* LIGHTS */}
       <Environment preset="sunset" />
@@ -34,8 +36,9 @@ export const ExperienceFreeRoam = () => {
           <mesh position={[0, -0.9, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[100, 100]} />
             <meshBasicMaterial color="#e3daf7" toneMapped={false} />
+            {/* <meshStandardMaterial map={map} /> */}
           </mesh>
-          <CuboidCollider position={[0, -3.5, 0]} args={[50, 0.1, 50]} sensor />
+          <CuboidCollider position={[2, -4.5, 0]} args={[10, 0.1, 50]} sensor />
         </RigidBody>
         <ContactShadows
           frames={1}
@@ -47,7 +50,7 @@ export const ExperienceFreeRoam = () => {
           color={"#aa9acd"}
         />
         {/* STAGE */}
-        <Roam position-y={-0.92} />
+        <Roam position={ [0, -0.92, 0] } />
         <RigidBody
           colliders={false}
           type="fixed"

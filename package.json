@@ -12,8 +12,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "9.75.0",
-    "@react-three/fiber": "8.13.3",
+    "@react-three/drei": "^9.75.0",
+    "@react-three/fiber": "^8.13.3",
     "@react-three/rapier": "^0.15.1",
     "@rollup/plugin-replace": "^5.0.5",
     "axios": "^1.7.2",
@@ -24,7 +24,7 @@
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "0.153.0",
+    "three": "^0.153.0",
     "vite-plugin-env-compatible": "^2.0.1",
     "zustand": "^4.3.7"
   },
