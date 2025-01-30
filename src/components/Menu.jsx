@@ -27,16 +27,10 @@ export const Menu = () => {
         </button>
         
         <div>
-          <p>
-            Made with 💙 by{" Maxim Carbonell-Kiamtia "}
-            <a href="https://mjcarbonell.github.io/" target="_blank">
-              Portfolio
-            </a>
-            , 3D models from{" "}
-            <a href="https://poly.pizza/" target="_blank">
-              Polly Pizza
-            </a>
-          </p>
+        <p>
+          Made with 💙 by <a href="https://mjcarbonell.github.io/" target="_blank">Maxim Carbonell-Kiamtia</a>,
+          Special thanks to <a href="https://www.youtube.com/@WawaSensei" target="_blank">WaWa Sensei</a> for their helpful tutorials that guided the development of this project!
+        </p>
         </div>
       </div>
       {/* This button is disabled unless we are in GAME_OVER state */}
