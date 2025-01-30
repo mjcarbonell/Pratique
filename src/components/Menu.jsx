@@ -29,7 +29,7 @@ export const Menu = () => {
         <div>
         <p>
           Made with 💙 by <a href="https://mjcarbonell.github.io/" target="_blank">Maxim Carbonell-Kiamtia</a>,
-          Special thanks to <a href="https://www.youtube.com/@WawaSensei" target="_blank">WaWa Sensei</a> for their helpful tutorials that guided the development of this project!
+          Special thanks to <a href="https://www.youtube.com/@WawaSensei" target="_blank">WaWa Sensei</a> that guided the development of this project!
         </p>
         </div>
       </div>
